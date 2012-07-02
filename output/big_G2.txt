@@ -1,0 +1,16 @@
+----------------------------------------
+ECP result:   4*p^9 + 5*p^8 - 13*p^7 - 22*p^6 + 9*p^5 + 23*p^4 + 22*p^3 + 17*p^2
+ECP coeffs:   4   5 -13 -22   9  23  22  17   0   0
+
+no-edges:  0
+numel2:    80
+full:      61
+numel3nf:  112
+numel4:    0
+multicomp: 39
+reliable:  552
+branch:    765
+----------------
+TOTAL:     1609
+
+Elapsed time is 14.158402 seconds

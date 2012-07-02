@@ -1,0 +1,14 @@
+function P = ECPN_ordered_chain(V,W,VW)
+%ECPN_ordered_chain Calculates ECPN for a (single) ordered chain
+%   Detailed explanation goes here
+
+switch numel(V)
+    case 0
+        disp('[WARNING] Attemting co call ECPN_ordered_chain_mu with n=0')
+    case 1
+        disp('[WARNING] Attemting co call ECPN_ordered_chain_mu with n=1')
+    otherwise
+
+end
+P = feval(symengine, 'ECPN_ordered_chain_mu',V,W,VW);
+end

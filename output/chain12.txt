@@ -1,0 +1,18 @@
+----------------------------------------
+Correct ECP:  1   2   3   4   5   6   7   8   9  10  11   0   0
+
+ECP result:   p^12 + 2*p^11 + 3*p^10 + 4*p^9 + 5*p^8 + 6*p^7 + 7*p^6 + 8*p^5 + 9*p^4 + 10*p^3 + 11*p^2
+ECP coeffs:   1   2   3   4   5   6   7   8   9  10  11   0   0
+
+no-edges:  0
+numel2:    512
+full:      0
+numel3nf:  512
+numel4:    0
+multicomp: 255
+reliable:  511
+branch:    1279
+----------------
+TOTAL:     3069
+
+Elapsed time is 26.974900 seconds

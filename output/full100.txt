@@ -1,0 +1,19 @@
+----------------------------------------
+Test code:    F100
+Correct ECP:  4950     0     0
+
+ECP result:   4950*p^2
+ECP coeffs:   4950     0     0
+
+no-edges:  0
+numel2:    0
+full:      1
+numel3nf:  0
+numel4:    0
+multicomp: 0
+reliable:  0
+branch:    0
+----------------
+TOTAL:     1
+
+Elapsed time is 0.598998 seconds

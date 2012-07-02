@@ -1,0 +1,38 @@
+function P = ECPN_cycle(V,E,W)
+%ECPN_chain Calculates ECPN for a (single) cycle
+%   Detailed explanation goes here
+
+n = numel(V);
+
+switch n
+%    case 1
+%    case 2
+    case 3
+        P = ECPN_C_numel3(V,E,V.*W);
+    otherwise % including n = 4
+        index =  graphtraverse(E,1,'Directed',false); %traversing cycle from first node
+        V = V(index);
+        W = W(index);% resorting (we do not need E anymore)
+
+        %need to optimize chain reductions
+        P = 0;
+        ind_q = 2:n;
+        Q = 1-V;
+        
+        P = Q(1) * ECPN_ordered_chain(V(2:n),W(2:n));
+%        P = P + ECPN_full(W);
+
+        mult = V(1); %rewrite via cumprod emulation
+        V(1) = 1;           
+        for i=2:n
+            ind_q = [i+1:n 1];
+            P = P + mult * Q(i) * ECPN_ordered_chain(V(ind_q),W(ind_q));
+            mult = mult*V(i);
+            V(i) = 1;
+            P = P + mult * W(1) * W(i);
+			W(1) = W(1) + W(i);
+        end
+        return
+end
+
+end

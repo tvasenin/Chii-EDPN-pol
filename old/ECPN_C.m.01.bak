@@ -1,0 +1,209 @@
+function P = ECPN_C(V,E,W)
+%ECPN_C Calculates ECPN for given connected(!) G(V,E,W)
+%   Assume that G is connected!
+
+global cntNOEDGES cntNUMEL2 cntFULL cntNUMEL3 cntCHAIN cntCIRCLE ...
+    cntNUMEL4 cntMAXDEG cntMULTICOMP cntRELIABLE cntBRANCHING cntTOTAL
+
+cntTOTAL = cntTOTAL + 1;
+
+Es = full(sum(E));
+
+n = numel(V);
+VW = V.*W;
+
+%% 2-node graph
+%
+if n == 2
+    cntNUMEL2 = cntNUMEL2 + 1;
+    P = ECPN_C_numel2(VW);
+    return
+end
+
+%% 3-node graph 
+%
+if n == 3
+    cntNUMEL3 = cntNUMEL3 + 1;
+    P = ECPN_C_numel3(V,E,VW);
+    return
+end
+
+%% Full graph
+%
+if min(Es) == n-1 %sum(Es) == n*(n-1)
+    cntFULL = cntFULL + 1;
+    P = ECPN_full(VW); %it's optimized for numel2;
+    return
+end
+
+%% (connected) >4-node graph with node of n-1 degree
+%
+if (n > 4) && (max(Es) == n-1)  % may be optimized for multiple nodes
+    cntMAXDEG = cntMAXDEG + 1;
+    %disp(int2str(n));
+    maxdeg = find(Es==(n-1),1);
+    m = V(maxdeg);
+    mask = [1:maxdeg-1 maxdeg+1:n];
+    %mask(maxdeg) = [];
+    VW(maxdeg)  = W(maxdeg); % VW will be used only if maxdeg-th node works;
+    
+    P = m * ECPN_full(VW) + (1-m) * ECPN(V(mask),E(mask,mask),W(mask));
+    return
+end
+
+%% >3-node cycle or chain
+%
+if (max(Es) == 2)
+
+    %finding starting node
+    s = find(Es==1,1); % chain
+    if isempty(s)      % circle
+        s = 1;
+    end
+    index =  graphtraverse(E,s,'Directed',false); %traversing chain or cycle
+
+    % resorting (we do not need E and VW anymore)
+    V = V(index);
+    W = W(index);
+    %VW = VW(index);
+
+    %dynamic precalc of symbolic cumprod array
+    cp = [V ; zeros(n-1,n)];
+    for i = 1:n-1
+        cp(i+1,1:n-i) = cp(i,1:n-i).*V(i+1:n);
+    end
+    
+    % check whether it's chain (min degree == 1) or circle (min degree = 2)
+    
+    if (min(Es) == 1) %chain
+        cntCHAIN = cntCHAIN + 1;
+        P = 0;
+        for i = 1:n-1
+            P = P + W(i)*sum(W(i+1:n).*cp(2:(n-i+1),i)');
+        end
+        return
+    else            % circle
+        disp(['fap-circle ', int2str(n)]);
+        cntCIRCLE = cntCIRCLE + 1;
+        P = 0;
+        %need to heavily optimizie!
+        for i = 1:n-1
+            for j = i+1:n
+                P = P + W(i)*W(j)*(cp(i,1)*cp(n-j+1,j) + cp(j-i+1,i) - cp(n,1));
+            end
+        end
+        return
+    end
+    
+end
+
+%% Sorting nodes by degree
+%
+[Es, index] = sort(Es,'descend');
+V = V(index);
+E = E(index,index);
+W = W(index);
+VW = VW(index);
+
+%ascending order slows up things!
+%needs testing
+
+%% 4-node connected, nonfull, nonchain, noncycle graph
+%
+if n == 4
+    cntNUMEL4 = cntNUMEL4 + 1;
+    P = V(1)*( W(1)*sum(VW(2:4)) + sum(VW([2 3 4]).*VW([3 4 2])) ); %circshift
+    if Es(2) == 1 %Es == [3 1 1 1]
+        %disp('fap1');
+        return
+    end
+    if Es(2) == 2 %Es == [3 2 2 1]
+        %disp('fap4');
+        %P = prod(VW([2 3]))  +  V(1)*( W(1)*sum(VW([2 3 4])) + sum(VW([3 4]).*VW([4 2])) );
+        P = P + (1-V(1)) * VW(2)*VW(3);
+        return
+    end
+    if Es(2) == 3 %Es == [3 3 2 2]
+        %disp('fap5');
+        P = P + (1-V(1)) * ( VW(2)*(VW(3)+VW(4)) + V(2)*VW(3)*VW(4) ); %to rewrite via circshift
+        return
+    end
+end
+
+%%QnD implementation of trees:
+%
+if false %(sum(Es) == 2*(n-1))
+    disp(['Tree found! n = ' int2str(n)])
+    P = 0;
+    for i = 1:n-1
+        for j =i+1:n
+            path = graphshortestpath(E,i,j,'Directed',false,'Method','BFS');
+            P = P + prod(V(path))*W(path(1))*W(path(end));
+        end
+    end
+    return
+end
+
+
+%% Fully reliable connected graph
+%
+if isempty(find(V~=1,1)) %V == ones(1,n) %sum(V) == n
+    cntRELIABLE = cntRELIABLE + 1;
+    P = ECPN_full(W); %using W instead of WV
+    return
+end
+
+%%
+%
+cntBRANCHING = cntBRANCHING + 1;
+
+%%% [V_MaxDegree R] = max(EIs);
+%%% R = R(1);
+%%% C = find(EI(R,:),1); % but maybe it's better to find another high-degree node
+
+%%%%[R,C] = find(EI,1);
+%%%[Vcon Econ] = EContract(V,E,R,C);
+%%%e = E(R,C);
+%%%P = (1-e)*ECP(V,ERemove(E,R,C)) + e*ECP(Vcon,Econ);
+
+%Vnonrel = find((V ~=0)&(V ~= 1));
+%red = Vnonrel(1);
+
+
+%% choosing node for reduction
+%
+%red = find(V~=1,1); will be used after splitting to ECPN and ECPN_C
+
+red = find((V~=0)&(V~=1),1);
+
+%tmp = find(Es == n-2,1); %will be used until splitting to ECPN and ECPN_C
+
+if false %~isempty(tmp) %wait for implementation of contractions;
+   tmp2 = E(tmp,:);
+   tmp2(tmp) = 1;
+   tmp3 = find((tmp2 == 0) & (V~=1));
+   if ~isempty(tmp3)
+       red = tmp3;
+       %disp('fap_good');
+   %else disp('fap_bad');
+   end
+end
+%%
+%
+Vred = V; Vred(red) = [];
+Ered = E; Ered(red,:) = []; Ered(:,red) = [];
+Wred = W; Wred(red) = [];
+
+m = V(red);
+
+V(red) = 1;
+
+%let's contract E without deleting red node
+%need optimizing
+cont = find (E(red,:)~=0);
+E(cont,cont) = 1;
+E = E - diag(diag(E));
+
+P = m * ECPN(V,E,W) + (1-m) * ECPN(Vred, Ered, Wred);
+
+end
