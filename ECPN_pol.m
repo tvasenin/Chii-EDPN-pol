@@ -2,7 +2,7 @@ function P = ECPN_pol(rel,E,Wpol)
 %ECPN Calculates ECPN for given G(V,E,W)
 %   Detailed explanation goes here
 
-global cntNOEDGES   cntMULTICOMP    cntTOTAL
+global cnt
 
 %% Precalc and delete isolated nodes or nodes without weight
 %
@@ -12,8 +12,8 @@ Vzero = find(Es==0);
 if ~isempty(Vzero)
     rel(Vzero)   = [];
     if isempty(rel) %no edges
-        cntTOTAL = cntTOTAL + 1;
-        cntNOEDGES = cntNOEDGES + 1;
+        cnt.TOTAL = cnt.TOTAL + 1;
+        cnt.NOEDGES = cnt.NOEDGES + 1;
         P = 0;
         return;
     end
@@ -31,8 +31,8 @@ end
 [CompNum V_comp] = graphalgs('wcc',0,false,E); % shortcut, need to place graphalgs MEX-file to the MATLAB path
 
 if CompNum > 1
-    cntTOTAL = cntTOTAL + 1;
-    cntMULTICOMP = cntMULTICOMP + 1;
+    cnt.TOTAL = cnt.TOTAL + 1;
+    cnt.MULTICOMP = cnt.MULTICOMP + 1;
     P = 0;
     for i = CompNum:-1:1
         mask = find(V_comp == i);

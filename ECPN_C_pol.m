@@ -2,15 +2,14 @@ function P = ECPN_C_pol(rel,E,Wpol)
 %ECPN_C Calculates ECPN for given connected(!) G(V,E,W)
 %   Assume that G is connected and has at least 1 edge!
 
-global cntNUMEL2 cntNUMEL3 cntNUMEL4 cntFULL cntCHAIN cntCYCLE ...
-    cntMAXDEG cntHNODES cntCHAINRED cntRELIABLE cntBRANCHING cntTOTAL
+global cnt
 
 %global HIT MISS
 
-cntTOTAL = cntTOTAL + 1;
-if mod(cntTOTAL,5000) == 0
-    disp(['TOTAL  cycles passed: ',int2str(cntTOTAL)]);
-    disp(['BRANCH cycles passed: ',int2str(cntBRANCHING)]);
+cnt.TOTAL = cnt.TOTAL + 1;
+if mod(cnt.TOTAL,5000) == 0
+    disp(['TOTAL  cycles passed: ',int2str(cnt.TOTAL)]);
+    disp(['BRANCH cycles passed: ',int2str(cnt.BRANCHING)]);
 end
 
 %% small precalc
@@ -23,18 +22,18 @@ assert(nnz(diag(E))==0, '[ERROR] Assertion failed -- nnz(diag(E))>0 in the start
 
 switch n
     case 2 % 2-node graph
-        cntNUMEL2 = cntNUMEL2 + 1;
+        cnt.NUMEL2 = cnt.NUMEL2 + 1;
         %VWpol = Wpol2VWpol_opt(rel,Wpol);
         %P = ECPN_C_numel2_pol(VWpol);
         P = ECPN_C_numel2_pol_v2(rel,Wpol);
         return
     case 3 % 3-node graph
-        cntNUMEL3 = cntNUMEL3 + 1;
+        cnt.NUMEL3 = cnt.NUMEL3 + 1;
         VWpol = Wpol2VWpol_opt(rel,Wpol);
         P = ECPN_C_numel3_pol(rel,E,VWpol);
         return
     case 4 % 4-node graph
-        cntNUMEL4 = cntNUMEL4 + 1;
+        cnt.NUMEL4 = cnt.NUMEL4 + 1;
         P = ECPN_C_numel4_pol(rel,E,Wpol);
         return
 end
@@ -50,7 +49,7 @@ q = sum(Es)/2;
 %
 switch q
     case n*(n-1)/2 % full
-       cntFULL = cntFULL + 1;
+       cnt.FULL = cnt.FULL + 1;
        VWpol = Wpol2VWpol_opt(rel,Wpol);
        P = ECPN_full_pol(VWpol);
        return
@@ -59,14 +58,14 @@ switch q
             if n>5 % do not highlight small cycles (uncomment for cycles debug!)
                 disp(['Found cycle = ', int2str(n)]) 
             end
-            cntCYCLE = cntCYCLE + 1;
+            cnt.CYCLE = cnt.CYCLE + 1;
             P = ECPN_cycle_pol_v2(rel,E,Wpol);
             return
         end
     case n-1 % tree
         if max(Es)==2 %chain
             disp('[INFO] Chain has been found inside ECPN_C!')
-            cntCHAIN = cntCHAIN + 1;
+            cnt.CHAIN = cnt.CHAIN + 1;
 %            disp(['conncomp = ', int2str(graphconncomp(E,'Directed',false))])
             VWpol = Wpol2VWpol_opt(rel,Wpol);
             P = ECPN_chain_pol(rel,E,VWpol);
@@ -79,7 +78,7 @@ end
 %% (connected) graph with node of n-1 degree
 %
 if (max(Es) == n-1)  % may be optimized for multiple nodes
-    cntMAXDEG = cntMAXDEG + 1;
+    cnt.MAXDEG = cnt.MAXDEG + 1;
     %temporary disabled debug output
     max_mask = Es==(n-1);
     %disp(['[INFO] found ',int2str(nnz(max_mask)),' nodes of degree n-1!'])
@@ -125,10 +124,10 @@ end
 %P = 0;
 
 if ~isempty(find(Es==1,1))
-    cntHNODES = cntHNODES + 1;
+    cnt.HNODES = cnt.HNODES + 1;
 %    disp('Found hnodes!');
 %    if (q == n-1)
-%    cntTREE = cntTREE + 1;
+%    cnt.TREE = cnt.TREE + 1;
 %        disp(['Found tree = ' int2str(n)])
 %    end
     P = ECPN_hnodes_pol_v3(rel,E,Wpol);
@@ -155,7 +154,7 @@ ind_ch = Es==2;
 
 %if nnz(ind_ch) > 0 %have 2 or more nodes with deg = 2
 if nnz(E(ind_ch,ind_ch)) % have at least two consecutive nodes of degree 2
-    cntCHAINRED = cntCHAINRED + 1;
+    cnt.CHAINRED = cnt.CHAINRED + 1;
     P = ECPN_chainred_pol_v3(rel,E,Wpol);
     return
 end
@@ -165,14 +164,14 @@ end
 %think about moving to ECPN
 assert(nnz(~rel)>0,'[ERROR] Assertion failed -- found fully reliable connected graph in ECPN_C just before branching!');
 if nnz(~rel)==0 %V == ones(1,n) %sum(V) == n
-    cntRELIABLE = cntRELIABLE + 1;
+    cnt.RELIABLE = cnt.RELIABLE + 1;
     P = ECPN_full_pol(Wpol); %using W instead of WV
     return
 end
 
 %%
 %
-cntBRANCHING = cntBRANCHING + 1;
+cnt.BRANCHING = cnt.BRANCHING + 1;
 
 
 %% Sorting nodes by degree;

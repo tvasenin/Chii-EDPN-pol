@@ -11,24 +11,25 @@ clear ES VS p WS ExP_res ExP_coeffs tStart tElapsed BGView
 %read(symengine, 'mu_cycle_comp.mu');
 
 %evalin(symengine,'getprop(p)')
-clear  cntNOEDGES cntMULTICOMP cntNUMEL2 cntNUMEL3 cntNUMEL4 cntFULL cntCHAIN cntCYCLE cntMAXDEG cntTREE cntHNODES cntCHAINRED cntRELIABLE cntBRANCHING cntTOTAL
-global cntNOEDGES cntMULTICOMP cntNUMEL2 cntNUMEL3 cntNUMEL4 cntFULL cntCHAIN cntCYCLE cntMAXDEG cntTREE cntHNODES cntCHAINRED cntRELIABLE cntBRANCHING cntTOTAL
 
-cntNOEDGES   = 0;
-cntMULTICOMP = 0;
-cntNUMEL2    = 0;
-cntNUMEL3    = 0;
-cntNUMEL4    = 0;
-cntFULL      = 0;
-cntCHAIN     = 0;
-cntCYCLE     = 0;
-cntMAXDEG    = 0;
-cntTREE      = 0;
-cntHNODES    = 0;
-cntCHAINRED  = 0;
-cntRELIABLE  = 0;
-cntBRANCHING = 0;
-cntTOTAL     = 0;
+clear cnt
+global cnt
+
+cnt.NOEDGES   = 0;
+cnt.MULTICOMP = 0;
+cnt.NUMEL2    = 0;
+cnt.NUMEL3    = 0;
+cnt.NUMEL4    = 0;
+cnt.FULL      = 0;
+cnt.CHAIN     = 0;
+cnt.CYCLE     = 0;
+cnt.MAXDEG    = 0;
+cnt.TREE      = 0;
+cnt.HNODES    = 0;
+cnt.CHAINRED  = 0;
+cnt.RELIABLE  = 0;
+cnt.BRANCHING = 0;
+cnt.TOTAL     = 0;
 
 clear  HIT MISS
 global HIT MISS
@@ -150,7 +151,7 @@ ExP_coeffs = ExP_coeffs(find(ExP_coeffs,1):end); % fails if all ExP_coeffs are z
 fprintf('ECP coeffs:   %s\n',int2str(ExP_coeffs));
 %fprintf('\nECP result:   %s\n',char(ExP_res));
 fprintf('\nno-edges:  %i\nmulticomp: %i\nnumel2:    %i\nnumel3:    %i\nnumel4:    %i\nfull5+:    %i\nchain5+:   %i\ncycle5+:   %i\nmaxdeg:    %i\ntree5+:    %i\nnhodes:    %i\nchainred:  %i\nreliable:  %i\nbranch:    %i\n----------------\nTOTAL:     %i\n', ...
-        [  cntNOEDGES     cntMULTICOMP   cntNUMEL2      cntNUMEL3      cntNUMEL4      cntFULL        cntCHAIN       cntCYCLE       cntMAXDEG      cntTREE        cntHNODES      cntCHAINRED    cntRELIABLE    cntBRANCHING                     cntTOTAL          ]);
+        [  cnt.NOEDGES    cnt.MULTICOMP  cnt.NUMEL2     cnt.NUMEL3     cnt.NUMEL4     cnt.FULL       cnt.CHAIN      cnt.CYCLE      cnt.MAXDEG     cnt.TREE       cnt.HNODES     cnt.CHAINRED   cnt.RELIABLE   cnt.BRANCHING                    cnt.TOTAL          ]);
 %fprintf('\nHIT:  %i\nMISS: %i\nHIT/MISS ratio: %f', [HIT MISS HIT/MISS]);
 fprintf('\nElapsed time is %8.6f seconds\n\n',tElapsed);
 
