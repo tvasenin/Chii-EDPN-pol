@@ -73,8 +73,6 @@ switch q
         end
 end
 
-%
-
 %% (connected) graph with node of n-1 degree
 %
 if (max(Es) == n-1)  % may be optimized for multiple nodes
@@ -130,8 +128,6 @@ if ~isempty(find(Es==1,1))
 %    cnt.TREE = cnt.TREE + 1;
 %        disp(['Found tree = ' int2str(n)])
 %    end
-%    P = ECPN_hnodes_pol_v3(rel,E,Wpol);
-%    return;
     [P, rel, E, Wpol] = ECPN_hnodes_pol_v3_back(rel,E,Wpol);
 %    if numel(rel) > 3 %
     if nnz(E) > 0 %still have some edges
