@@ -64,6 +64,9 @@ disp('---------------------------------------------');
 %[VS, ES] = gen_test_big_G1;             %~ 0.8s
 %[VS, ES] = gen_test_big_G2;             %~ 1.0s
 
+arpa_num = 40;
+[VS, ES] = gen_arpanet_small(arpa_num);                 %%%EPIC
+
     arpa_time(01:17)=[ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ]; %untested
 %[VS, ES] = gen_arpanet_small(20);       %~0.3s             %2012-03-07
     arpa_time(18:20)=[ 1 1 1 ];                             %2012-03-07
@@ -79,7 +82,7 @@ disp('---------------------------------------------');
 %[VS, ES] = gen_arpanet_small(38);       %
 %[VS, ES] = gen_arpanet_small(39);       %
     arpa_time(37:39)=[ 26 26 26];                           %2012-03-13
-[VS, ES] = gen_arpanet_small(40);       %~109s  1m49s      %2012-03-13
+%[VS, ES] = gen_arpanet_small(40);       %~109s  1m49s      %2012-03-13
 %[VS, ES] = gen_arpanet_small(42);       %
 %[VS, ES] = gen_arpanet_small(43);       %
 %[VS, ES] = gen_arpanet_small(44);       %
@@ -155,5 +158,4 @@ fprintf('\nno-edges:  %i\nmulticomp: %i\nnumel2:    %i\nnumel3:    %i\nnumel4:  
 %fprintf('\nHIT:  %i\nMISS: %i\nHIT/MISS ratio: %f', [HIT MISS HIT/MISS]);
 fprintf('\nElapsed time is %8.6f seconds\n\n',tElapsed);
 
-%[VS, ES] = gen_arpanet_small(37);
-[VS, ES] = gen_arpanet_small(40);
+[VS, ES] = gen_arpanet_small(arpa_num);
