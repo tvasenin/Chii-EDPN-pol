@@ -130,12 +130,15 @@ if ~isempty(find(Es==1,1))
 %    cnt.TREE = cnt.TREE + 1;
 %        disp(['Found tree = ' int2str(n)])
 %    end
-    P = ECPN_hnodes_pol_v3(rel,E,Wpol);
-    return;
-%    [P, rel, E, Wpol] = ECPN_hnodes_pol_v3_back(rel,E,Wpol);
+%    P = ECPN_hnodes_pol_v3(rel,E,Wpol);
+%    return;
+    [P, rel, E, Wpol] = ECPN_hnodes_pol_v3_back(rel,E,Wpol);
 %    if numel(rel) > 3 %
-%       return
-%    end
+    if nnz(E) > 0 %still have some edges
+        tmp = ECPN_C_pol(rel,E,Wpol);
+        P = poly_add(P,tmp);
+    end
+    return
 end
 
 %Es = sum(E); % recalcing

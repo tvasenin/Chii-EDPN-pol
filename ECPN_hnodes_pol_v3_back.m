@@ -89,13 +89,6 @@ while ~isempty(hnodes)
     end
 end
 
-%if nnz(Es) > 0 %still have some edges
-% %    tmp = ECPN_C_pol(rel(ind),E(ind,ind),Wpol(ind,:));
-% %    tmp = ECPN_C_pol(rel,E(ind,ind),Wpol);
-%    tmp = ECPN_C_pol(rel,E,Wpol);
-%    P = poly_add(P,tmp);
-%end
-
 %P = P(find(P,1):end); % trim leading zeros
 %P = polytrim_fast(P); % trim leading zeros
 
