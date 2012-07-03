@@ -73,8 +73,8 @@ disp('---------------------------------------------');
 %arpa_num = 23;                          %~2s               %2012-03-12
 %arpa_num = 31;                          %~2s               %2012-03-12
     arpa_time(23:31)=[ 2 2 2 2 2 2 2 2 2 ];                 %2012-03-12
-%arpa_num = 36;                          %~6s               %2012-03-12
-    arpa_time(32:36)=[ 6 6 6 6 6 ];                         %2012-03-12
+%arpa_num = 36;                          %~5s               %2012-07-04
+    arpa_time(32:36)=[ 5 5 5 5 5 ];                         %2012-07-04
 %arpa_num = 37;                          %~25s              %2012-07-04
 %arpa_num = 38;                          %
 %arpa_num = 39;                          %
@@ -110,10 +110,6 @@ arpa_num = 51;                          %~722s 12m02s       %2012-07-04
 %[VS, ES] = gen_arpanet;                 %%%EPIC
 
 
-%[VS, ES] = gen_test_chain_central(100); %~ 3.5s 
-%[VS, ES] = gen_test_chain_central(4); %~ 3.5s 
-%[VS, ES] = gen_test_circle_central(5); %~ 3.5s 
-
 %plot(arpa_time,'-o');
 
 Vrel = false(1,length(VS));
@@ -136,7 +132,6 @@ end
 %%
 %
 tStart = tic;
-%ExP_res = ECPN(VS, ES, WS)
 ExP_coeffs = ECPN_pol(Vrel, ES, Wpol);
 
 tElapsed=toc(tStart);
@@ -155,4 +150,4 @@ fprintf('\nno-edges:  %i\nmulticomp: %i\nnumel2:    %i\nnumel3:    %i\nnumel4:  
 fprintf('\nElapsed time is %8.6f seconds\n\n',tElapsed);
 fprintf('\nECP coeffs:   %s\n',int2str(ExP_coeffs));
 
-[VS, ES] = gen_arpanet_small(arpa_num);
+[~, ~] = gen_arpanet_small(arpa_num);
