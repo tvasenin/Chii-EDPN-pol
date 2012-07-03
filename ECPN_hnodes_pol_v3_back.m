@@ -20,7 +20,7 @@ while ~isempty(hnodes)
             E = [];
             rel = [];
             Wpol = [];
-            return
+            break
         otherwise
 
             [i1, neis] = find(E(hnodes,:));
