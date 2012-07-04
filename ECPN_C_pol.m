@@ -97,15 +97,20 @@ switch q
        VWpol = Wpol2VWpol_opt(rel,Wpol);
        P = ECPN_full_pol(VWpol);
        return
-    case n
-        if max(Es)==2 % cycle
-            if n>5 % do not highlight small cycles (uncomment for cycles debug!)
-                disp(['Found cycle = ', int2str(n)]) 
-            end
-            cnt.CYCLE = cnt.CYCLE + 1;
+    case n %cycle with possible hnodes
+        cnt.CYCLE = cnt.CYCLE + 1;
+        if max(Es)>2 % cycle with hnodes
+            cnt.HNODES = cnt.HNODES + 1;
+            [P, rel, E, Wpol] = ECPN_hnodes_pol_v3_back(rel,E,Wpol);
+            n = numel(rel);
+            P = poly_add(P,ECPN_cycle_pol_v2(rel,E,Wpol));
+        else % max(Es)==2 % cycle
             P = ECPN_cycle_pol_v2(rel,E,Wpol);
-            return
         end
+        if n>5 % do not highlight small cycles (uncomment for cycles debug!)
+            disp(['Found cycle = ', int2str(n)]) 
+        end
+        return
     case n-1 % tree
         if max(Es)==2 %chain
             disp('[INFO] Chain has been found inside ECPN_C!')
