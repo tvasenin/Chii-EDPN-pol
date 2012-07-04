@@ -40,38 +40,9 @@ end
 
 %% now we can assume that we have connected graph with 5 or more nodes
 
-%% small precalc
+%% precalc
 Es = sum(E);
-q = sum(Es)/2;
 %assert(nnz(rel(Es==2))==0,'out');
-
-%% full/chain/cycle case
-%
-switch q
-    case n*(n-1)/2 % full
-       cnt.FULL = cnt.FULL + 1;
-       VWpol = Wpol2VWpol_opt(rel,Wpol);
-       P = ECPN_full_pol(VWpol);
-       return
-    case n
-        if max(Es)==2 % cycle
-            if n>5 % do not highlight small cycles (uncomment for cycles debug!)
-                disp(['Found cycle = ', int2str(n)]) 
-            end
-            cnt.CYCLE = cnt.CYCLE + 1;
-            P = ECPN_cycle_pol_v2(rel,E,Wpol);
-            return
-        end
-    case n-1 % tree
-        if max(Es)==2 %chain
-            disp('[INFO] Chain has been found inside ECPN_C!')
-            cnt.CHAIN = cnt.CHAIN + 1;
-%            disp(['conncomp = ', int2str(graphconncomp(E,'Directed',false))])
-            VWpol = Wpol2VWpol_opt(rel,Wpol);
-            P = ECPN_chain_pol(rel,E,VWpol);
-            return
-        end
-end
 
 %% (connected) graph with node of n-1 degree
 %
@@ -113,6 +84,37 @@ if (max(Es) == n-1)  % may be optimized for multiple nodes
         %P = P + sum(VW(max_mask)) * sum(VW(~max_mask));
     end
     return
+end
+
+%% precalc
+q = sum(Es)/2;
+
+%% full/chain/cycle case
+%
+switch q
+    case n*(n-1)/2 % full
+       cnt.FULL = cnt.FULL + 1;
+       VWpol = Wpol2VWpol_opt(rel,Wpol);
+       P = ECPN_full_pol(VWpol);
+       return
+    case n
+        if max(Es)==2 % cycle
+            if n>5 % do not highlight small cycles (uncomment for cycles debug!)
+                disp(['Found cycle = ', int2str(n)]) 
+            end
+            cnt.CYCLE = cnt.CYCLE + 1;
+            P = ECPN_cycle_pol_v2(rel,E,Wpol);
+            return
+        end
+    case n-1 % tree
+        if max(Es)==2 %chain
+            disp('[INFO] Chain has been found inside ECPN_C!')
+            cnt.CHAIN = cnt.CHAIN + 1;
+%            disp(['conncomp = ', int2str(graphconncomp(E,'Directed',false))])
+            VWpol = Wpol2VWpol_opt(rel,Wpol);
+            P = ECPN_chain_pol(rel,E,VWpol);
+            return
+        end
 end
 
 %% Debug -- checking for hanging trees(or nodes or chains)
