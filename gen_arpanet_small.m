@@ -76,7 +76,7 @@ switch n
     case 53, disp('Correct?ECP53:');
     case 54, disp('Correct?ECP54:');
     case 55, disp('Correct?ECP55:');
-    case 56, disp('Correct?ECP56:');
+    case 56, disp('Correct?ECP56:2    -5   -21    81   -71  -147   646  -387 -1261   328  2428   351 -2206 -1474  1020   430    -1   341   879  -286  -415   150  -131  -102  -141   251  -812  -323   219   256  -161  -220   209   240   269   255   273   281   269   208   151   102    65     0     0');
     case 57, disp('Correct?ECP57:');
     case 58, disp('Correct?ECP58:');
     case 59, disp('Correct?ECP59:');
