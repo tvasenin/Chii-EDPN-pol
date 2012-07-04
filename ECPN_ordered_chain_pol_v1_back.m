@@ -16,10 +16,6 @@ switch n
 %        P = conv2(VW(1,:),VW(2,:)); % need for speed
     case 3
         VW = Wpol2VWpol(rel,Wpol);
-%        VW = V.*W;
-%        P = ECPN_C_numel3 (V,E,V.*W);
-%        P = VW(2)*(VW(1)+VW(3)) + VW(1)*VW(3)*V(2);
-%        P = VW([2 3 1])*(VW.*[1 1 V(2)])';
         if rel(2) 
             P = conv2(VW(1,:)+VW(3,:),VW(2,:)) + conv2(VW(3,:),VW(1,:));
         else

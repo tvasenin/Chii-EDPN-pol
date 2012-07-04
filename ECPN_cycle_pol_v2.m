@@ -13,12 +13,9 @@ switch n
     case 2
         disp('[ERROR] ECPN_cycle called with n=2')
     case 3
-        %VWpol = Wpol2VWpol_opt(rel, Wpol);
         P = ECPN_full_pol(VWpol);
     case 4 %very time consuming operation on lagre graphs
-        %index =  graphtraverse(E,1,'Directed',false); %traversing cycle
-        %index = graphalgs('dfs',0,false,E,1,inf);% shortcut, need to place graphalgs MEX-file to the MATLAB path
-        %clear E % do not need E anymore
+        %traversing cycle
         index = [1 0 0 0];
         index([2 4]) = find(E(1,:));
         index(3) = 10 - sum(index);

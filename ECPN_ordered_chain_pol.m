@@ -11,13 +11,8 @@ switch n
 %        disp('[WARNING] Attemting co call ECPN_ordered_chain with n=1')
         P = 0;
     case 2
-        %P = ECPN_C_numel2_pol(VW);
         P = conv2(VW(1,:),VW(2,:)); % need for speed
     case 3
-%        VW = V.*W;
-%        P = ECPN_C_numel3 (V,E,V.*W);
-%        P = VW(2)*(VW(1)+VW(3)) + VW(1)*VW(3)*V(2);
-%        P = VW([2 3 1])*(VW.*[1 1 V(2)])';
         if rel(2) 
             P = conv2(VW(1,:)+VW(3,:),VW(2,:)) + conv2(VW(3,:),VW(1,:));
         else

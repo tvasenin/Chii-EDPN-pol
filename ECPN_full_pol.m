@@ -10,12 +10,9 @@ switch n
         disp('[ERROR] Attempting to call ECPN_full with n=1')
     case 2
         %disp('[WARNING] Attempt to call ECPN_full with n=2')
-%        P = ECPN_C_numel2_pol(VW);
         P = conv2(VWpol(1,:),VWpol(2,:));
     case 3
 %        disp('[WARNING] Attempt to call ECPN_full with n=3')
-%        P = sum(VW.*circshift(VW,[0 1]));
-%        P = VW([2 3 1])*VW';
         P = conv2(VWpol(1,:)+VWpol(2,:),VWpol(3,:)) + conv2(VWpol(1,:),VWpol(2,:));
     case 4
         P = conv2(VWpol(1,:)+VWpol(2,:), VWpol(3,:)+VWpol(4,:)) + conv2(VWpol(1,:), VWpol(2,:)) + conv2(VWpol(3,:),VWpol(4,:));
