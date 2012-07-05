@@ -121,7 +121,7 @@ switch q
         else %tree and not chain
             disp('[INFO] Tree has been found inside ECPN_C!')
             cnt.TREE = cnt.TREE + 1;
-            P = ECPN_hnodes_pol_v3(rel,E,Wpol);
+            [P, ~, ~, ~] = ECPN_hnodes_pol_v3_back(rel,E,Wpol);
         end
         return        
 end
