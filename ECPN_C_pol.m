@@ -118,8 +118,11 @@ switch q
 %            disp(['conncomp = ', int2str(graphconncomp(E,'Directed',false))])
             VWpol = Wpol2VWpol_opt(rel,Wpol);
             P = ECPN_chain_pol(rel,E,VWpol);
-            return
+        else %tree and not chain
+            disp('[INFO] Tree has been found inside ECPN_C!')
+            P = ECPN_hnodes_pol_v3(rel,E,Wpol);
         end
+        return        
 end
 
 %% Debug -- checking for hanging trees(or nodes or chains)
