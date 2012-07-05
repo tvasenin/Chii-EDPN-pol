@@ -13,10 +13,8 @@ q = sum(Es)/2;
 while ~isempty(hnodes)
     switch q
         case 1  %have only 2 nodes
-            VWpol = Wpol2VWpol(rel, Wpol); % optimize the routine to not use VW at all!
-                %P = P + ECPN_C_numel2(VW(hnodes)); % now we recalc VW.
-            %P = poly_add(P,ECPN_C_numel2_pol(VWpol(hnodes,:))); % now we recalc VW.
-            P = poly_add(P,ECPN_C_numel2_pol(VWpol)); % now we recalc VW.
+            %P = P + ECPN_C_numel2(VW(hnodes)); % now we recalc VW.
+            P = poly_add(P,ECPN_C_numel2_pol_v2(rel,Wpol)); % now we recalc VW.
             E = [];
             rel = [];
             Wpol = [];
@@ -28,11 +26,10 @@ while ~isempty(hnodes)
                 [~, i2] = sort(i1); %to optimize!
                 neis = neis(i2);
                 
-                %[hneis, ind2, ~] = unique(hneis); % to optimize
                 [neis, ind2] = unique_fast(neis); % to optimize
                 hnodes = hnodes(ind2);
             else
-                [~, neis] = find(E(hnodes,:));
+                neis = find(E(hnodes,:),1);
             end
     
 %           if Es(hnei) == 2
@@ -46,10 +43,13 @@ while ~isempty(hnodes)
                nei = neis(i);
                if      rel(hnode) &&  rel(nei) % [1 1]
                    P = P + [0  0  conv2(Wpol(hnode,:),Wpol(nei,:))];
+%                   P(3:end) = P(3:end) + conv2(Wpol(hnode,:),Wpol(nei,:));
                elseif ~rel(hnode) && ~rel(nei) % [p p]
                    P = P + [conv2(Wpol(hnode,:),Wpol(nei,:))  0  0];
+%                   P(1:end-2) = P(1:end-2) + conv2(Wpol(hnode,:),Wpol(nei,:));
                else                            % [0 p] or [p 0]
                    P = P + [0  conv2(Wpol(hnode,:),Wpol(nei,:))  0];
+%                   P(2:end-1) = P(2:end-1) + conv2(Wpol(hnode,:),Wpol(nei,:));
                end
            end
            
