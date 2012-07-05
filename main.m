@@ -79,7 +79,7 @@ disp('---------------------------------------------');
 %arpa_num = 38;                          %
 %arpa_num = 39;                          %
     arpa_time(37:39)=[ 23 23 23];                           %2012-07-04
-%arpa_num = 42;                          %~98s   1m38s      %2012-07-04
+%arpa_num = 42;                          %~98s              %2012-07-04
 %arpa_num = 44;                          %
 %arpa_num = 45;                          %
 %arpa_num = 46;                          %
@@ -88,23 +88,24 @@ disp('---------------------------------------------');
     arpa_time(40:48)=[ 98 98 98  0  0  0  0  0  0 ];        %2012-07-04
 %arpa_num = 49;                          %
 %%arpa_num = 50;                          % should be equal to 49
-%arpa_num = 51;                          %~902s 15m02s      %2012-03-12
-%arpa_num = 51;                          %~758s 12m38s      %2012-03-13
-%arpa_num = 51;                          %~722s 12m02s      %2012-07-04
-    arpa_time(49:51)=[   0   0  902];
+%arpa_num = 51;                          %~902s    15m02s   %2012-03-12
+%arpa_num = 51;                          %~758s    12m38s   %2012-03-13
+%arpa_num = 51;                          %~722s    12m02s   %2012-07-04
+%arpa_num = 51;                          %~694s    11m34s   %2012-07-04
+    arpa_time(49:51)=[   0   0  694];                       %2012-07-04
 %arpa_num = 52;                          %
 %arpa_num = 53;                          %
 %arpa_num = 54;                          %
 %arpa_num = 55;                          %
-%arpa_num = 56;                          %~4617s ~1h17m     %2012-03-15
-%arpa_num = 56;                          %~4144s ~1h10m     %2012-07-04
-    arpa_time(52:56)=[    0    0    0    0 4617 ];          %2012-03-15
-%arpa_num = 57;                          %
-    arpa_time(57)=     0;
+%arpa_num = 56;                          %~4617s   ~1h17m   %2012-03-15
+%arpa_num = 56;                          %~4144s   ~1h10m   %2012-07-04
+    arpa_time(52:56)=[    0    0    0    0 4144 ];          %2012-07-04
+%arpa_num = 57;                          %~87005s ~24h10m   %2012-07-04
+    arpa_time(57)= 87005;
 %arpa_num = 58;                          %
-    arpa_time(58)=     0;
+    arpa_time(58)=      0;
 %arpa_num = 59;                          %
-    arpa_time(59)=     0;
+    arpa_time(59)=      0;
 
 [VS, ES] = gen_arpanet_small(arpa_num);
 
