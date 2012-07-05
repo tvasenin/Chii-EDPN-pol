@@ -8,7 +8,7 @@ switch numel(rel)
         P = 0;
     case 2
         disp('[WARNING] Calling ECPN_chain with n = 2');
-        P = ECPN_C_numel2_pol(VW);
+        P = ECPN_C_numel2_pol(VWpol); % cant use v2 because it needs rel and Wpol
     case 3
         disp('[WARNING] Calling ECPN_chain with n = 3');
         P = ECPN_C_numel3_pol(rel,E,VWpol);
