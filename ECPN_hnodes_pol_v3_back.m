@@ -23,14 +23,17 @@ while ~isempty(hnodes)
             break
         otherwise
 
-            [i1, neis] = find(E(hnodes,:));
-            [~, i2] = sort(i1); %to optimize!
-            neis = neis(i2);
-
-            %[hneis, ind2, ~] = unique(hneis); % to optimize
-            [neis, ind2] = unique_fast(neis); % to optimize
-            
-            hnodes = hnodes(ind2);
+            if length(hnodes) > 1 % actally need standalone code path here
+                [i1, neis] = find(E(hnodes,:));
+                [~, i2] = sort(i1); %to optimize!
+                neis = neis(i2);
+                
+                %[hneis, ind2, ~] = unique(hneis); % to optimize
+                [neis, ind2] = unique_fast(neis); % to optimize
+                hnodes = hnodes(ind2);
+            else
+                [~, neis] = find(E(hnodes,:));
+            end
     
 %           if Es(hnei) == 2
 %               disp('WOW! Hanging chain has been found!');
