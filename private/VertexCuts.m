@@ -1,18 +1,13 @@
 function cuts = VertexCuts(E)
 %
 n = length(E);
-used(1:n) = false; % not from zero!
+cuts = false(1,n);
+used = false(1,n);
 timer = 0;
-tin(1:n) = 0; % not from zero!
-fup(1:n) = 0; % not from zero!
-cuts(1:n) = false;
-
-for k = n:-1:1
-    neis_db{k} = find(E(k,:));
-end
+tin = zeros(1,n);
+fup = zeros(1,n);
 
 dfs(1);
-%cuts = find(cuts);
 
     function dfs(v, p)
         if nargin == 1
@@ -23,10 +18,7 @@ dfs(1);
         fup(v) = timer;
         timer = timer + 1;
         children = 0;
-%        neis = find(E(v,:));
-        neis = neis_db{v};
-        for i = 1:length(neis)
-            to = neis(i);
+        for to = find(E(v,:))
             if (to == p)
                 continue;
             end
