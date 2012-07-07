@@ -8,11 +8,11 @@ P = zeros(1,2*length(Wpol(1,:))+1);
 
 hnodes = find(Es==1); %maybe it's possible to rewrite via hnodes = Es==1;
 %ind = true(1,n);
-q = sum(Es)/2;
+%q = sum(Es)/2;
 %disp('===================================')
 while ~isempty(hnodes)
-    switch q
-        case 1  %have only 2 nodes
+    switch n  %q
+        case 2  % have only 2 nodes
             %P = P + ECPN_C_numel2(VW(hnodes)); % now we recalc VW.
             P = poly_add(P,ECPN_C_numel2_pol_v2(rel,Wpol)); % now we recalc VW.
             E = [];
@@ -28,7 +28,7 @@ while ~isempty(hnodes)
                 
                 [neis, ind2] = unique_fast(neis); % to optimize
                 hnodes = hnodes(ind2);
-            else
+            else % have only one hnode
                 neis = find(E(hnodes,:),1);
             end
     
@@ -77,10 +77,8 @@ while ~isempty(hnodes)
            end
 
            Es(neis) = Es(neis) - 1; %
-           q = q - length(hnodes);
+%           q = q - length(hnodes);
     
-%           ind(hnodes) = 0;
-           
            rel(hnodes) = [];
            n = length(rel);
            E(hnodes,:) = [];
