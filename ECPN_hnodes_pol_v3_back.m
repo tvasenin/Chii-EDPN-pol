@@ -58,22 +58,33 @@ while ~isempty(hnodes)
            
            %Wpol = [zeros(n,1) Wpol]; % padarray is sooo sloow ^^
            %Wpol(neis,:) = Wpol(neis,:) + VWpol(hnodes,:);
-           
-           hnodes_nonrel = hnodes(~rel(hnodes));
-           if ~isempty(hnodes_nonrel)
-               neis_hnonrel  =   neis(~rel(hnodes));
-               hnodes_rel    = hnodes( rel(hnodes));
-               neis_hrel     =   neis( rel(hnodes));
                
-               krel    = length(hnodes_rel);
-               knonrel = length(hnodes_nonrel);
-               Wpol2 = [zeros(n,1) Wpol]; % padarray is sooo sloow ^^
-               Wpol2(neis_hnonrel,:) = [zeros(knonrel,1)  Wpol(neis_hnonrel,:)] + [Wpol(hnodes_nonrel,:)  zeros(knonrel,1)];
-               Wpol2(neis_hrel,:)    = [zeros(krel,1)  Wpol(neis_hrel,:)+Wpol(hnodes_rel,:)];
-               Wpol = Wpol2;
-               P = [0 0 P];
-           else
-               Wpol(neis,:) = Wpol(neis,:) + Wpol(hnodes,:);
+           if length(hnodes) > 1
+               hnodes_nonrel = hnodes(~rel(hnodes));
+               if ~isempty(hnodes_nonrel)
+                   neis_hnonrel  =   neis(~rel(hnodes));
+                   hnodes_rel    = hnodes( rel(hnodes));
+                   neis_hrel     =   neis( rel(hnodes));
+                   
+                   krel    = length(hnodes_rel);
+                   knonrel = length(hnodes_nonrel);
+                   Wpol2 = [zeros(n,1) Wpol]; % padarray is sooo sloow ^^
+                   Wpol2(neis_hnonrel,:) = [zeros(knonrel,1)  Wpol(neis_hnonrel,:)] + [Wpol(hnodes_nonrel,:)  zeros(knonrel,1)];
+                   Wpol2(neis_hrel,:)    = [zeros(krel,1)  Wpol(neis_hrel,:)+Wpol(hnodes_rel,:)];
+                   Wpol = Wpol2;
+                   P = [0 0 P];
+               else
+                   Wpol(neis,:) = Wpol(neis,:) + Wpol(hnodes,:);
+               end
+           else %have only one hnode, can use hnode and nei
+               if rel(hnode)
+                   Wpol(nei,:) = Wpol(nei,:) + Wpol(hnode,:);
+               else
+                   Wpol2 = [zeros(n,1) Wpol]; % padarray is sooo sloow ^^
+                   Wpol2(nei,:) = [ 0  Wpol(nei,:) ] + [ Wpol(hnode,:)  0 ];
+                   Wpol = Wpol2;
+                   P = [0 0 P];
+               end
            end
 
            Es(neis) = Es(neis) - 1; %
