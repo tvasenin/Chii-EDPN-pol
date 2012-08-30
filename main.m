@@ -1,4 +1,4 @@
-clear all   % Uncomment for release and benchmarks!!
+clear variables   % Uncomment for release and benchmarks!!
 %reset(symengine) % no symengine for POL version
 %-read data
 clear ES VS p WS ExP_res ExP_coeffs tStart tElapsed BGView
