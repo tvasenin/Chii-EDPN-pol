@@ -274,7 +274,13 @@ ind = true(1,n);
 ind(red) = 0;
 
 %P = P + (1-m) * ECPN(Vred, Ered, Wred);
-P = conv2(ECPN_pol(rel(ind),E(ind,ind),Wpol(ind,:)),[-1, 1]);
+if isempty(junc_cand) % have no junction nodes, can remove any node and still have connected graph
+    P = ECPN_C_pol(rel(ind),E(ind,ind),Wpol(ind,:));
+else
+    P = ECPN_pol(rel(ind),E(ind,ind),Wpol(ind,:));
+end
+
+P = conv2(P,[-1, 1]);
 
 %% searching for another adjacent reliable nodes
 %  
