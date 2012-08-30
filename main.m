@@ -12,7 +12,7 @@ clear ES VS p WS ExP_res ExP_coeffs tStart tElapsed BGView
 
 %evalin(symengine,'getprop(p)')
 
-clear cnt
+clear global cnt
 global cnt
 
 cnt.NOEDGES   = 0;
@@ -31,10 +31,10 @@ cnt.RELIABLE  = 0;
 cnt.BRANCHING = 0;
 cnt.TOTAL     = 0;
 
-clear  HIT MISS
-global HIT MISS
-HIT  = 0;
-MISS = 0;
+%clear  global HIT MISS
+%global HIT MISS
+%HIT  = 0;
+%MISS = 0;
 
 %%
 %
@@ -99,7 +99,7 @@ disp('---------------------------------------------');
 %arpa_num = 55;                          %
 %arpa_num = 56;                          %~4617s   ~1h17m   %2012-03-15
 %arpa_num = 56;                          %~4144s   ~1h10m   %2012-07-04
-arpa_num = 56;                          %~3676s   ~1h02m   %2012-07-07
+%arpa_num = 56;                          %~3676s   ~1h02m   %2012-07-07
 %arpa_num = 56;                          %~4076s   ~1h08m   %2012-08-27 [S]
     arpa_time(52:56)=[    0    0    0    0 4076 ];          %2012-08-27 [S]
 %arpa_num = 57;                          %~87005s ~24h10m   %2012-07-04
