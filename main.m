@@ -109,7 +109,7 @@ disp('---------------------------------------------');
 %arpa_num = 59;                          %
     arpa_time(59)=      0;
 
-[VS, ES] = gen_arpanet_small(arpa_num);
+[VS, ES, ref] = gen_arpanet_small(arpa_num);
 
 %[VS, ES] = gen_arpanet;                 %%%EPIC
 
@@ -154,4 +154,5 @@ fprintf('\nno-edges:  %i\nmulticomp: %i\nnumel2:    %i\nnumel3:    %i\nnumel4:  
 fprintf('\nElapsed time is %8.6f seconds\n\n',tElapsed);
 fprintf('\nECP coeffs:   %s\n',int2str(ExP_coeffs));
 
-[~, ~] = gen_arpanet_small(arpa_num);
+[~, ~, ~] = gen_arpanet_small(arpa_num);
+if isequal(ref, ExP_coeffs'), disp('OK!'); else disp('FAILED!'); end
