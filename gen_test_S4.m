@@ -18,6 +18,6 @@ E(2,5) = 1;
 E = (E + E');
 
 disp('Test code:    S4');
-disp('Correct ECP:  -1 -2  9  2  2  0');
+disp('Correct ECP:  1 -6  9  6  0  0');
 
 end
