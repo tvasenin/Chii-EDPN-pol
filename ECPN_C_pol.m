@@ -1,4 +1,4 @@
-function P = ECPN_C_pol(rel,E,Wpol)
+function P = ECPN_C_pol(rel,E,Wpol, cut_idx)
 %ECPN_C Calculates ECPN for given connected(!) G(V,E,W)
 %   Assume that G is connected and has at least 1 edge!
 
@@ -243,8 +243,13 @@ red = find(~rel,1); % but maybe it's better to find another high-degree node
 
 %% Trying to find best junction (unreliable) node
 %
-% junc_cand = find((~rel) & (Es == 2)); % only test nodes with degree 2
-junc_cand = find((~rel) & VertexCuts(E));
+
+if nargin < 4
+    cut_idx = VertexCuts(E);
+end
+
+junc_cand = find((~rel) & cut_idx);
+
 if ~isempty(junc_cand)
     comp_weight(1:n) = (n-1)^2;
     for i = junc_cand
@@ -274,10 +279,14 @@ ind = true(1,n);
 ind(red) = 0;
 
 %P = P + (1-m) * ECPN(Vred, Ered, Wred);
-if isempty(junc_cand) % have no junction nodes, can remove any node and still have connected graph
-    P = ECPN_C_pol(rel(ind),E(ind,ind),Wpol(ind,:));
-else
-    P = ECPN_pol(rel(ind),E(ind,ind),Wpol(ind,:));
+if ~cut_idx(red)% red is not cut, so after removing red graph will stay connected
+    P = ECPN_C_pol(rel(ind),E(ind,ind),Wpol(ind,:)); % may get new cut nodes, can't pass cut_idx! 
+else            % red is cut, so we definitely have multigraph
+    if nnz(cut_idx & E(red,:)) %there are some cut nodes adjacent to red
+        P = ECPN_pol(rel(ind),E(ind,ind),Wpol(ind,:)); % may lose some cut nodes (red neighbours)!
+    else                       %there are some cut nodes adjacent to red
+        P = ECPN_pol(rel(ind),E(ind,ind),Wpol(ind,:), cut_idx(ind)); % red is cut node and there are no adjacent cut nodes
+    end
 end
 
 P = conv2(P,[-1, 1]);
@@ -302,10 +311,13 @@ if ~isempty(nodes_rel)
 end
 
 %% contracting E without deleting red node
-E = ContractNodes(E,red);
+E = ContractNodes(E,red); % maybe we can contract red with nodes_rel
 
 %% second subgraph
 
+%Will not get new cuts after contracting,
+%but need strict check which nodes will ctop being cuts after contracting
+%before using cut_idx here!
 %P = P + p * ECPN_C(V(~nodes_rel_ind),E(~nodes_rel_ind,~nodes_rel_ind),W(~nodes_rel_ind));
 tmp = ECPN_C_pol(rel(~nodes_rel_ind),E(~nodes_rel_ind,~nodes_rel_ind),Wpol(~nodes_rel_ind,:));
 P = poly_add(P, [tmp 0]);

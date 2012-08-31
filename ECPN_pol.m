@@ -1,4 +1,4 @@
-function P = ECPN_pol(rel,E,Wpol)
+function P = ECPN_pol(rel,E,Wpol, cut_idx)
 %ECPN Calculates ECPN for given G(V,E,W)
 %   Detailed explanation goes here
 
@@ -37,13 +37,21 @@ if CompNum > 1
     for i = CompNum:-1:1
         mask = find(V_comp == i);
         %P = P + ECPN_C(V(mask),E(mask,mask),W(mask));
-        tmp = ECPN_C_pol(rel(mask),E(mask,mask),Wpol(mask,:));
+        if nargin < 4
+            tmp = ECPN_C_pol(rel(mask),E(mask,mask),Wpol(mask,:)); % do not calculate cut_idx if it's not necessary
+        else
+            tmp = ECPN_C_pol(rel(mask),E(mask,mask),Wpol(mask,:), cut_idx(mask)); %rely on correct cut_idx from argin
+        end
         P = poly_add(P,tmp);
         %ECPN_conn(i) = ECPN(rel(mask),E(mask,mask),W(mask)); %bad typecast
     end
     %P = sum(ECPN_conn);
 else
-P = ECPN_C_pol(rel,E,Wpol);
+    if nargin < 4
+        P = ECPN_C_pol(rel,E,Wpol); % do not calculate cut_idx if it's not necessary
+    else
+        P = ECPN_C_pol(rel,E,Wpol, cut_idx); % rely on correct cut_idx from argin
+    end
 end
 
 end
