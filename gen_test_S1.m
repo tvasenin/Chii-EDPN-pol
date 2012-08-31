@@ -1,4 +1,4 @@
-function [V E] = gen_test_S1
+function [V E ref] = gen_test_S1
 %gen_test_S1  Generates small test S1
 %   Detailed explanation goes here
 
@@ -14,8 +14,10 @@ E(2,4) = 1;
 
 E = (E + E');
 
+ref_str = '  -1  2  5  0  0';
+ref = sscanf(ref_str,'%d');
+
 disp('Test code:    S1');
-disp('Correct ECP:  -1  2  5  0  0');
-%%strvcat('Correct answer:','[45, -17, -56, -115, -28, 408, 588, -944, -2261, 3075, 4055, -11121, 9525, -3494, 124, 264, -44, -4]')
+disp(['Correct ECP:' ref_str]);
 
 end

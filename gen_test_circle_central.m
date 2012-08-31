@@ -1,8 +1,8 @@
-function [V E] = gen_test_circle_central(n)
+function [V E ref] = gen_test_circle_central(n)
 %gen_test_chain  Generates test circle
 %   Detailed explanation goes here
 
-[V E] = gen_test_circle(n);
+[V E ref] = gen_test_circle(n);
 
 central_perm = [];
 for i = 1:n

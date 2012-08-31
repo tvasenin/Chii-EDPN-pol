@@ -1,8 +1,6 @@
-function [V E] = gen_test_S5
-%gen_test_S1  Generates small test S5
+function [V E ref] = gen_test_S5
+%gen_test_S5  Generates small test S5
 %   Detailed explanation goes here
-
-syms p;
 
 V = ones(6,1)';
 
@@ -18,7 +16,10 @@ E(4,6) = 1;
 
 E = (E + E');
 
+ref_str = '  1  -2  -3  12   7   0   0';
+ref = sscanf(ref_str,'%d');
+
 disp('Test code:    S5');
-disp('Correct ECP:  1  -2  -3  12   7   0   0');
+disp(['Correct ECP:' ref_str]);
 
 end
