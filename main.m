@@ -155,4 +155,4 @@ fprintf('\nElapsed time is %8.6f seconds\n\n',tElapsed);
 fprintf('\nECP coeffs:   %s\n',int2str(ExP_coeffs));
 
 [~, ~, ~] = gen_arpanet_small(arpa_num);
-if isequal(ref, ExP_coeffs'), disp('OK!'); else disp('FAILED!'); end
+if isequal(ref, ExP_coeffs') || isequal(ref, ExP_coeffs), disp('OK!'); else disp('FAILED!'); end
