@@ -83,7 +83,8 @@ switch n
     case 59, title = 'Correct?ECP59:'; ref_str = '';
 end
 
-disp([title ref_str]);
 ref = sscanf(ref_str,'%d');
+
+disp([title ref_str]);
 
 end
