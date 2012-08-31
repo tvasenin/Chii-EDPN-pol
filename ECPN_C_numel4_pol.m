@@ -34,7 +34,8 @@ switch q
             %P = m * feval(symengine, 'ECPN_full_mu',V.*W) + (1-m) * ECPN_C_numel2(V(ind_2).*W(ind_2));
             P = ECPN_full_pol(VWpol);
             if ~rel_maxdeg
-                P = poly_add( [P 0], conv2([-1 1], ECPN_C_numel2_pol(VWpol(mask,:))));
+                %P = poly_add( [P 0], conv2([-1 1], ECPN_C_numel2_pol(VWpol(mask,:))));
+                P = poly_add( [P 0], conv2([-1 1], ECPN_C_numel2_pol_v2(rel(mask),Wpol(mask,:))));
 %                tmp = ECPN_C_numel2_pol(VWpol(mask,:));
 %                P = poly_add( [P 0], -[tmp 0] + [0 tmp]);
             end
