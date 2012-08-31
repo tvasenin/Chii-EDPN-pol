@@ -41,25 +41,12 @@ cnt.TOTAL     = 0;
 disp('---------------------------------------------');
 disp('---------------------------------------------');
 
-%[VS, ES] = gen_test_circle_central(60);%
-%[VS, ES] = gen_test_circle_central(5);%
-
 %[VS, ES] = gen_test_chain_central(30); %
 
-%[VS, ES] = gen_test_S1;                 %
-%[VS, ES] = gen_test_S2;                 %
-% S3 is NOT APPLICABLE for POL version
-%[VS, ES] = gen_test_S4;                 %
-%[VS, ES] = gen_test_S5;                 %
-
-
 %[VS, ES] = gen_test_chain(200);        %~ 1.5s       %test is deprecated
-%%[VS, ES] = gen_test_circle(40);        %~ 1.2s       %test is deprecated
-%[VS, ES] = gen_test_circle_central(100);%~ 12s 
 %[VS, ES] = gen_test_chain_central(400); %~ 3.5s 
 %[VS, ES] = gen_test_tree_balanced(1,1);  %~ ?.?s 
  
-%[VS, ES] = gen_test_full(3000);          %~0.6s       %biograph is SLOW
 %[VS, ES] = gen_test_big_G1_easy;        %~ 0.3s
 %[VS, ES] = gen_test_big_G1;             %~ 0.8s
 %[VS, ES] = gen_test_big_G2;             %~ 1.0s
