@@ -44,9 +44,9 @@ end
 Es = sum(E);
 %assert(nnz(rel(Es==2))==0,'out');
 
-%% (connected) graph with node of n-1 degree
+%% (connected) graph with node of n-1 degree, but not full
 %
-if (max(Es) == n-1)  % may be optimized for multiple nodes
+if (max(Es) == n-1) && nnz(Es~=(n-1)) % should not be full, may be optimized for multiple nodes
     cnt.MAXDEG = cnt.MAXDEG + 1;
     %temporary disabled debug output
     max_mask = Es==(n-1);
