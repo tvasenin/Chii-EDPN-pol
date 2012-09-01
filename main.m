@@ -2,15 +2,6 @@ clear variables   % Uncomment for release and benchmarks!!
 %reset(symengine) % no symengine for POL version
 %-read data
 clear ES VS p WS ExP_res ExP_coeffs tStart tElapsed BGView
-%syms     VS p WS  positive % real
-%syms        p      positive % real
-
-%MuPAD versions of critical code
-%read(symengine, 'ECPN_full_mu.mu');
-%read(symengine, 'ECPN_ordered_chain_mu.mu');
-%read(symengine, 'mu_cycle_comp.mu');
-
-%evalin(symengine,'getprop(p)')
 
 clear global cnt
 global cnt
@@ -41,10 +32,6 @@ cnt.TOTAL     = 0;
 disp('---------------------------------------------');
 disp('---------------------------------------------');
 
-%[VS, ES] = gen_test_chain_central(30); %
-
-%[VS, ES] = gen_test_chain(200);        %~ 1.5s       %test is deprecated
-%[VS, ES] = gen_test_chain_central(400); %~ 3.5s 
 %[VS, ES] = gen_test_tree_balanced(1,1);  %~ ?.?s 
  
 %[VS, ES] = gen_test_big_G1_easy;        %~ 0.3s
