@@ -188,6 +188,12 @@ rel = rel(index);
 E = E(index,index);
 Wpol = Wpol(index,:);
 
+if nargin < 4
+    cut_idx = VertexCuts(E);
+else
+    cut_idx = cut_idx(index);
+end
+
 %ascending order slows up things!
 %needs testing
 
@@ -233,10 +239,6 @@ red = find(~rel,1); % but maybe it's better to find another high-degree node
 
 %% Trying to find best junction (unreliable) node
 %
-
-if nargin < 4
-    cut_idx = VertexCuts(E);
-end
 
 junc_cand = find((~rel) & cut_idx);
 
