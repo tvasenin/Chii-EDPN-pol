@@ -1,5 +1,5 @@
 function [V E ref] = gen_test_circle(n)
-%gen_test_chain  Generates test circle
+%gen_test_circle  Generates test circle
 %   Detailed explanation goes here
 
 V = ones(n,1)';

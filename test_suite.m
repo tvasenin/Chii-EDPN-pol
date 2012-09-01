@@ -23,7 +23,13 @@ run_test(VS, ES, ref, 'Test S5       OK!', 'Test S5       FAILED!');
 [VS, ES, ref] = gen_test_full(2500);          %~2.5s      %biograph is SLOW
 run_test(VS, ES, ref, 'Test FULL     OK!', 'Test FULL     FAILED!');
 
-[VS, ES, ref] = gen_test_circle(400);
+[VS, ES, ref] = gen_test_chain(5000);         %~0.8s       
+run_test(VS, ES, ref, 'Test CHAIN    OK!', 'Test CHAIN    FAILED!');
+
+[VS, ES, ref] = gen_test_chain_central(5000); %~0.8s 
+run_test(VS, ES, ref, 'Test CHAIN_C  OK!', 'Test CHAIN_C  FAILED!');
+
+[VS, ES, ref] = gen_test_circle(400);         %~2.9s
 run_test(VS, ES, ref, 'Test CIRCLE   OK!', 'Test CIRCLE   FAILED!');
 
 [VS, ES, ref] = gen_test_circle_central(400); %~2.9s

@@ -1,8 +1,8 @@
-function [V E] = gen_test_chain_central(n)
+function [V E ref] = gen_test_chain_central(n)
 %gen_test_chain  Generates test chain
 %   Detailed explanation goes here
 
-[V E] = gen_test_chain(n);
+[V E ref] = gen_test_chain(n);
 
 central_perm = [];
 for i = 1:n
@@ -21,10 +21,6 @@ end
 
 
 E = E(central_perm2,central_perm2);
-
-%EDP_correct = [sum(1:(n-1)) -(n-1):-1];
-
-%disp(strvcat('Correct answer:', strrep(mat2str(EDP_correct),' ',', ')))
 
 end
 
