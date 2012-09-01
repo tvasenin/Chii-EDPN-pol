@@ -16,15 +16,11 @@ end
 n = length(rel);
 assert(nnz(diag(E))==0, '[ERROR] Assertion failed -- nnz(diag(E))>0 in the start of ECPN_C!');
 
-
-%if nnz(diag(E)) > 0, disp('HALT'); end
 %% 2-3-4 node case
 
 switch n
     case 2 % 2-node graph
         cnt.NUMEL2 = cnt.NUMEL2 + 1;
-        %VWpol = Wpol2VWpol_opt(rel,Wpol);
-        %P = ECPN_C_numel2_pol(VWpol);
         P = ECPN_C_numel2_pol_v2(rel,Wpol);
         return
     case 3 % 3-node graph
@@ -49,7 +45,7 @@ Es = sum(E);
 if (max(Es) == n-1) && nnz(Es~=(n-1)) % should not be full, may be optimized for multiple nodes
     cnt.MAXDEG = cnt.MAXDEG + 1;
     %temporary disabled debug output
-    max_mask = Es==(n-1);
+    %max_mask = Es==(n-1);
     %disp(['[INFO] found ',int2str(nnz(max_mask)),' nodes of degree n-1!'])
 
     VWpol = Wpol2VWpol(rel,Wpol);
@@ -89,7 +85,7 @@ end
 %% precalc
 q = sum(Es)/2;
 
-%% full/chain/cycle case
+%% full/cycle/chain/tree case
 %
 switch q
     case n*(n-1)/2 % full
@@ -134,11 +130,6 @@ end
 
 if ~isempty(find(Es==1,1))
     cnt.HNODES = cnt.HNODES + 1;
-%    disp('Found hnodes!');
-%    if (q == n-1)
-%    cnt.TREE = cnt.TREE + 1;
-%        disp(['Found tree = ' int2str(n)])
-%    end
     [P, rel, E, Wpol] = ECPN_hnodes_pol_v3_back(rel,E,Wpol);
 %    if numel(rel) > 3 %
     if nnz(E) > 0 %still have some edges
@@ -153,7 +144,6 @@ end
 %
 
 assert (max(Es) > 2,'[ERROR] Got cycle after cycle check!');
-% Assert max(Es) > 2
 
 %detect chains
 ind_ch = Es==2;
@@ -274,7 +264,7 @@ end
 %m = V(red); % 
 
 assert(~rel(red),'[HALT] Assertion failed: reliable node has been chosen for reduction!');
-%% first subgraph
+%% first subgraph (failed node)
 ind = true(1,n);
 ind(red) = 0;
 
@@ -288,7 +278,6 @@ else            % red is cut, so we definitely have multigraph
         P = ECPN_pol(rel(ind),E(ind,ind),Wpol(ind,:), cut_idx(ind)); % red is cut node and there are no adjacent cut nodes
     end
 end
-
 P = conv2(P,[-1, 1]);
 
 %% searching for another adjacent reliable nodes
@@ -313,7 +302,7 @@ end
 %% contracting E without deleting red node
 E = ContractNodes(E,red); % maybe we can contract red with nodes_rel
 
-%% second subgraph
+%% second subgraph (reliable node)
 
 %Will not get new cuts after contracting,
 %but need strict check which nodes will ctop being cuts after contracting
@@ -321,12 +310,5 @@ E = ContractNodes(E,red); % maybe we can contract red with nodes_rel
 %P = P + p * ECPN_C(V(~nodes_rel_ind),E(~nodes_rel_ind,~nodes_rel_ind),W(~nodes_rel_ind));
 tmp = ECPN_C_pol(rel(~nodes_rel_ind),E(~nodes_rel_ind,~nodes_rel_ind),Wpol(~nodes_rel_ind,:));
 P = poly_add(P, [tmp 0]);
-
-%removing nodes_rel;
-%V(nodes_rel) = [];
-%E(nodes_rel,:) = []; E(:,nodes_rel) = [];
-%W(nodes_rel) = [];
-%P = P + p * ECPN_C(V,E,W);
-%P = (1-m) * ECPN(V(ind), E(ind,ind), W(ind)) + m * ECPN_C(V,E,W);
 
 end
