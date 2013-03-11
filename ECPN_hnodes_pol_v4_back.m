@@ -3,20 +3,15 @@ function [P, rel, E, Wpol] = ECPN_hnodes_pol_v4_back(rel,E,Wpol)
 %   Detailed explanation goes here
 
 n = numel(rel);
-Es = sum(E);
 P = zeros(1,2*length(Wpol(1,:))+1);
 
 [lmat pmat mcnt] = GetHnodesQueue(E);
-
 
 leftover = true(1,n);
 
 for k = 1:length(mcnt)
     hnodes = lmat(k,1:mcnt(k));
     neis   = pmat(k,1:mcnt(k));
-%           if Es(hnei) == 2
-%               disp('WOW! Hanging chain has been found!');
-%           end
            %P = P + VW(hnodes)*VW(hneis)'; %shouldn't use VW for hnode!!
            %tmp = zeros(1,length(hnodes));
            
