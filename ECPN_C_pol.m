@@ -245,14 +245,9 @@ junc_cand = find((~rel) & cut_idx);
 if ~isempty(junc_cand)
     comp_weight(1:n) = (n-1)^2;
     for i = junc_cand
-%        [CompNum V_comp] = graphconncomp(E([1:i-1 i+1:n],[1:i-1 i+1:n]),'Directed',false);
-        [CompNum V_comp] = graphalgs('wcc',0,false,E([1:i-1 i+1:n],[1:i-1 i+1:n]));
-        if CompNum > 1
-            comp_weight_tmp = 0;
-            for j = 1:CompNum
-                comp_weight_tmp = comp_weight_tmp + (nnz(V_comp == j))^2;
-            end
-        comp_weight(i) = comp_weight_tmp;
+        [~, c_lens] = components_mex(E([1:i-1 i+1:n],[1:i-1 i+1:n]));
+        if (length(c_lens) > 1)
+            comp_weight(i) = sum(c_lens.^2);
         end
     end
     %comp_weight = comp_weight / (n-1)^2; % assert: n > 1 :)

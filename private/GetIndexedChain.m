@@ -11,13 +11,8 @@ ind_ch = (Es == 2);
 E_ch = E;
 E_ch(~ind_ch,:) = 0;
 E_ch(:,~ind_ch) = 0;
-%[CompNum comps] = graphconncomp(E_ch,'Directed',false);
-[CompNum comps] = graphalgs('wcc',0,false,E_ch); % shortcut, need to place graphalgs MEX-file to the MATLAB path
+[comps c_lens] = components_mex(E_ch); % shortcut, need to place MEX-file to the MATLAB path
 
-c_lens = zeros(0,CompNum);
-for i = 1:CompNum
-    c_lens(i) = nnz(comps == i);
-end
 c_lens(c_lens == 1) = 0;
 
 [c_len c_max] = max(c_lens);
@@ -38,6 +33,7 @@ index = 1:n;
 %    disp('OLOLO! c0 = cend!');
 %end
 
+c = c';
 index([c0 c]) = [];
 index = [c0 c index];
 c0   = find(index == c0);

@@ -27,8 +27,8 @@ end
 % TODO: insert assert
 
 %% Connection components count
-%[CompNum V_comp] = graphconncomp(E,'Directed',false);
-[CompNum V_comp] = graphalgs('wcc',0,false,E); % shortcut, need to place graphalgs MEX-file to the MATLAB path
+[V_comp, c_lens] = components_mex(E); % shortcut, need to place MEX-file to the MATLAB path
+CompNum = length(c_lens);
 
 if CompNum > 1
     cnt.TOTAL = cnt.TOTAL + 1;

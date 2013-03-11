@@ -31,7 +31,9 @@ Wpol  =  Wpol(index,:);
 %cum_nonrel = [0,cumsum(~rel(c_first:end))]; % look into making array shorter
 cum_nonrel(c_first:n)  = cumsum(~rel(c_first:n)); % look into making array shorter
 
-[chainbridge comps_br([c0 c_first c_last+1:n])] = graphalgs('wcc',0,false,E([c0 c_first c_last+1:n],[c0 c_first c_last+1:n])); % shortcut, need to place graphalgs MEX-file to the MATLAB path
+[comps_br([c0 c_first c_last+1:n]), c_lens] = components_mex(E([c0 c_first c_last+1:n],[c0 c_first c_last+1:n])); % shortcut, need to place MEX-file to the MATLAB path
+chainbridge = length(c_lens);
+
 comps_br(c_first) = 0; % important!
 assert(chainbridge < 3, '[ERROR] Assertion failed: Unbelieveable! First node of the chain breaks graph into >2 conn comps!');
 assert(comps_br(c0) == 1,'[ERROR] Left part of graph has index 2!');
