@@ -97,7 +97,7 @@ switch q
         cnt.CYCLE = cnt.CYCLE + 1;
         if max(Es)>2 % cycle with hnodes
             cnt.HNODES = cnt.HNODES + 1;
-            [P, rel, E, Wpol] = ECPN_hnodes_pol_v3_back(rel,E,Wpol);
+            [P, rel, E, Wpol] = ECPN_hnodes_pol_v4_back(rel,E,Wpol);
             n = numel(rel);
             P = poly_add(P,ECPN_cycle_pol_v2(rel,E,Wpol));
         else % max(Es)==2 % cycle
@@ -117,7 +117,7 @@ switch q
         else %tree and not chain
             disp('[INFO] Tree has been found inside ECPN_C!')
             cnt.TREE = cnt.TREE + 1;
-            [P, ~, ~, ~] = ECPN_hnodes_pol_v3_back(rel,E,Wpol);
+            [P, ~, ~, ~] = ECPN_hnodes_pol_v4_back(rel,E,Wpol);
         end
         return        
 end
@@ -130,7 +130,7 @@ end
 
 if ~isempty(find(Es==1,1))
     cnt.HNODES = cnt.HNODES + 1;
-    [P, rel, E, Wpol] = ECPN_hnodes_pol_v3_back(rel,E,Wpol);
+    [P, rel, E, Wpol] = ECPN_hnodes_pol_v4_back(rel,E,Wpol);
 %    if numel(rel) > 3 %
     if nnz(E) > 0 %still have some edges
         tmp = ECPN_C_pol(rel,E,Wpol);
