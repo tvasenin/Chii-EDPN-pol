@@ -11,7 +11,6 @@ switch n
         P = 0;
         Wlast = Wpol;
     case 2
-        %P = ECPN_C_numel2_pol(VW);
         ECPN_C_numel2_pol_v2(rel,Wpol) 
 %        P = conv2(VW(1,:),VW(2,:)); % need for speed
     case 3
