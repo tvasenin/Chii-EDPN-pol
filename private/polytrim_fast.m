@@ -1,6 +1,6 @@
-function r = polytrim_fast(p)
+function p = polytrim_fast(p)
 
-   r = p(find(p,1):end);
+    p = p(find(p,1):end);
 
 end
 
