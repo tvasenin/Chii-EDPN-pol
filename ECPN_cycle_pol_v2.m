@@ -41,8 +41,7 @@ switch n
         end
 
     otherwise
-        %index =  graphtraverse(E,1,'Directed',false); %traversing cycle
-        index = graphalgs('dfs',0,false,E,1,inf);% shortcut, need to place graphalgs MEX-file to the MATLAB path
+        [~, index] = sort(dfs_mex(E,1,0,0)); % shortcut, need to place MEX-file to the MATLAB path
         %clear E % do not need E anymore
 
         % reordering
