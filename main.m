@@ -82,7 +82,6 @@ disp('---------------------------------------------');
 
 %[VS, ES] = gen_arpanet;                 %%%EPIC
 
-
 %plot(arpa_time,'-o');
 
 Vrel = false(1,length(VS));

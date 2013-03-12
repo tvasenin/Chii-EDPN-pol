@@ -26,7 +26,7 @@ switch n
 
         P = conv2(VWpol(1,:)+VWpol(3,:),VWpol(2,:)+VWpol(4,:)); %all adjacent;
         P = [0 0 P];
-        
+
         tmp = conv2(VWpol(1,:),VWpol(3,:));
         if rel(2) || rel(4)
             P = P + [ 0 0 tmp];
@@ -45,10 +45,11 @@ switch n
         index = graphalgs('dfs',0,false,E,1,inf);% shortcut, need to place graphalgs MEX-file to the MATLAB path
         %clear E % do not need E anymore
 
-        % resorting
+        % reordering
         rel = rel(index);
         VWpol = VWpol(index,:);
-        
+
+
         unrel_shift = ~[rel(2:end) rel(1)]';
         cum_cw = zeros(n);
         for i = 2:n

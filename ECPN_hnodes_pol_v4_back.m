@@ -29,13 +29,12 @@ for k = 1:length(mcnt)
 %                   P(2:end-1) = P(2:end-1) + conv2(Wpol(hnode,:),Wpol(nei,:));
                end
            end
-           
+
            %W(hneis) = W(hneis) + VW(hnodes);
            %Wpol = padarray (Wpol,[0,1],'pre'); % now dim(Wpol) should be equal to dim(VWpol)
-           
            %Wpol = [zeros(n,1) Wpol]; % padarray is sooo sloow ^^
            %Wpol(neis,:) = Wpol(neis,:) + VWpol(hnodes,:);
-               
+
            if length(hnodes) > 1
                hnodes_nonrel = hnodes(~rel(hnodes));
                if ~isempty(hnodes_nonrel)
@@ -66,9 +65,12 @@ for k = 1:length(mcnt)
     leftover(hnodes) = false;
 end
 
+%[~, fnzc] = find(Wpol,1); % approximate
 rel  =  rel(leftover);
 E    =    E(leftover,leftover);
+%Wpol = Wpol(leftover,fnzc:end);
 Wpol = Wpol(leftover,:);
+
 
 %P = P(find(P,1):end); % trim leading zeros
 %P = polytrim_fast(P); % trim leading zeros
