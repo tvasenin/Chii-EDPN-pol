@@ -78,7 +78,7 @@ disp('---------------------------------------------');
 %arpa_num = 59;                          %
     arpa_time(59)=      0;
 
-[VS, ES, ref] = gen_arpanet_small(arpa_num);
+[VS, ES, ref] = gen_arpanet(arpa_num);
 
 %[VS, ES] = gen_arpanet;                 %%%EPIC
 
