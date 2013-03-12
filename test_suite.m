@@ -35,7 +35,7 @@ run_test(VS, ES, ref, 'Test CIRCLE   OK!', 'Test CIRCLE   FAILED!');
 [VS, ES, ref] = gen_test_circle_central(400); %~2.9s
 run_test(VS, ES, ref, 'Test CIRCLE_C OK!', 'Test CIRCLE_C FAILED!');
 
-for i = [10 15:26 31]
+for i = [10:26 31]
     [VS, ES, ref] = gen_arpanet(i);
     run_test(VS, ES, ref, ['Test ARPA_' int2str(i) '  OK!'], ['Test ARPA_' int2str(i) '  FAILED!']);
 end
