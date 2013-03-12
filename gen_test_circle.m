@@ -2,8 +2,9 @@ function [V E ref] = gen_test_circle(n)
 %gen_test_circle  Generates test circle
 %   Detailed explanation goes here
 
-V = ones(n,1)';
-E = diag(ones(n-1,1),1) + diag(ones(n-1,1),-1);
+V = ones(1,n);
+%E = diag(ones(n-1,1),1) + diag(ones(n-1,1),-1);
+E = logical(diag(ones(n-1,1),1)) | logical(diag(ones(n-1,1),-1));
 
 E(1,end) = 1;
 E(end,1) = 1;

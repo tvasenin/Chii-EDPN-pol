@@ -3,7 +3,7 @@ function [V E ref] = gen_test_full(n)
 %   Detailed explanation goes here
 
 V = ones(n,1)';
-E = ones(n) - eye(n);
+E = true(n) - logical(eye(n));
 
 ref = [n*(n-1)/2 0 0];
 

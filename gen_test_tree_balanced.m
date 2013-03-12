@@ -11,7 +11,7 @@ n = sum(lev_cnt);
 
 V = ones(1,n);
 
-E = zeros(n);
+E = false(n);
 
 lev_finish = cumsum(lev_cnt);
 lev_start  = lev_finish - lev_cnt + ones(1,h);

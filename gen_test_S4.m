@@ -4,7 +4,7 @@ function [V E ref] = gen_test_S4
 
 V = ones(5,1)';
 
-E = zeros(5);
+E = false(5);
 E(1,3) = 1;
 E(1,4) = 1;
 E(1,5) = 1;
@@ -12,7 +12,7 @@ E(2,3) = 1;
 E(2,4) = 1;
 E(2,5) = 1;
 
-E = (E + E');
+E = (E | E');
 
 ref_str = '  1 -6  9  6  0  0';
 ref = sscanf(ref_str,'%d');

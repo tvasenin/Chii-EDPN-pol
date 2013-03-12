@@ -4,7 +4,7 @@ function [V E] = gen_test_big_G1
 
 V = ones(10,1)';
 
-E = zeros(10);
+E = false(10);
 E(1,3) = 1;
 
 E(2,3) = 1;
@@ -30,7 +30,7 @@ E(7,8) = 1;
 E(8,9) = 1;
 E(8,10)= 1;
 
-E = (E + E');
+E = (E | E');
 
 %disp('Untested ECP: 15  -72  142 -152   77   20   15    0    0');
 disp('Untested ECP: -1   6  -8 -12  17  26  17   0   0');
