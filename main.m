@@ -8,11 +8,6 @@ global cnt
 
 cnt = initCNT();
 
-%clear  global HIT MISS
-%global HIT MISS
-%HIT  = 0;
-%MISS = 0;
-
 %%
 %
 disp('---------------------------------------------');
@@ -67,11 +62,8 @@ disp('---------------------------------------------');
 %plot(arpa_time,'-o');
 
 Vrel = false(1,length(VS));
-%WS = ones(1,length(VS));
 Wpol = ones(length(VS),1);
 ES = sparse(logical(ES));
-%ES = single(sparse(ES));
-%%ES = int8(ES);
 
 disp(['conncomp = ', int2str(graphconncomp(ES,'Directed',false))])
 
@@ -91,16 +83,10 @@ ExP_coeffs = ECPN_pol(Vrel, ES, Wpol);
 tElapsed=toc(tStart);
 disp('[INFO] ECPN found!')
 
-% ExP_res = poly2sym(ExP_coeffs,p);
-% ExP_res = collect(ExP_res); % do we really need this?
-%ExP_coeffs = sym2poly(ExP_res);
 ExP_coeffs = ExP_coeffs(find(ExP_coeffs,1):end); % fails if all ExP_coeffs are zero :)
 
-
-%fprintf('\nECP result:   %s\n',char(ExP_res));
 fprintf('\nno-edges:  %i\nmulticomp: %i\nnumel2:    %i\nnumel3:    %i\nnumel4:    %i\nmaxdeg:    %i\nfull5+:    %i\nchain5+:   %i\ncycle5+:   %i\ntree5+:    %i\nnhodes:    %i\nchainred:  %i\nreliable:  %i\nbranch:    %i\n----------------\nTOTAL:     %i\n', ...
         [  cnt.NOEDGES    cnt.MULTICOMP  cnt.NUMEL2     cnt.NUMEL3     cnt.NUMEL4     cnt.MAXDEG     cnt.FULL       cnt.CHAIN      cnt.CYCLE      cnt.TREE       cnt.HNODES     cnt.CHAINRED   cnt.RELIABLE   cnt.BRANCHING                    cnt.TOTAL          ]);
-%fprintf('\nHIT:  %i\nMISS: %i\nHIT/MISS ratio: %f', [HIT MISS HIT/MISS]);
 fprintf('\nElapsed time is %8.6f seconds\n\n',tElapsed);
 fprintf('\nECP coeffs:   %s\n',int2str(ExP_coeffs));
 
