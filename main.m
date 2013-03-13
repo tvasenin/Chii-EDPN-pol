@@ -87,7 +87,7 @@ ExP_coeffs = ExP_coeffs(find(ExP_coeffs,1):end); % fails if all ExP_coeffs are z
 
 fprintf('\nno-edges:  %i\nmulticomp: %i\nnumel2:    %i\nnumel3:    %i\nnumel4:    %i\nmaxdeg:    %i\nfull5+:    %i\nchain5+:   %i\ncycle5+:   %i\ntree5+:    %i\nnhodes:    %i\nchainred:  %i\nreliable:  %i\nbranch:    %i\n----------------\nTOTAL:     %i\n', ...
         [  cnt.NOEDGES    cnt.MULTICOMP  cnt.NUMEL2     cnt.NUMEL3     cnt.NUMEL4     cnt.MAXDEG     cnt.FULL       cnt.CHAIN      cnt.CYCLE      cnt.TREE       cnt.HNODES     cnt.CHAINRED   cnt.RELIABLE   cnt.BRANCHING                    cnt.TOTAL          ]);
-fprintf('\nElapsed time is %8.6f seconds\n\n',tElapsed);
+fprintf('\nElapsed time is %8.5f seconds\n\n',tElapsed);
 fprintf('\nECP coeffs:   %s\n',int2str(ExP_coeffs));
 
 [~, ~, ~] = gen_arpanet(arpa_num);
