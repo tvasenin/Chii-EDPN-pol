@@ -62,7 +62,7 @@ disp('---------------------------------------------');
 
 [VS, ES, ref] = gen_arpanet(arpa_num);
 
-%[VS, ES] = gen_arpanet;                 %%%EPIC
+%[VS, ES, ref] = gen_arpanet;            %%%EPIC
 
 %plot(arpa_time,'-o');
 
