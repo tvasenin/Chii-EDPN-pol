@@ -1,7 +1,5 @@
 function test_suite
 
-global cnt
-
 [VS, ES, ref] = gen_test_S1;
 run_test(VS, ES, ref, 'Test S1       OK!', 'Test S1       FAILED!');
 
