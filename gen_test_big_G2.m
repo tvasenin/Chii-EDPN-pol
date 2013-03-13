@@ -1,8 +1,8 @@
-function [V E] = gen_test_big_G2
+function [V E ref] = gen_test_big_G2
 %gen_test_full  Generates big test G2
 %   Detailed explanation goes here
 
-V = ones(10,1)';
+V = ones(1,10);
 
 E = false(10);
 E(1,2) = 1;
@@ -31,12 +31,10 @@ E(9,10)= 1;
 
 E = (E | E');
 
-disp(strvcat('Correct answer:','[ 45, -17, -46, -78, -43, 89, 171, 374, 434, -2143, -3250, 10750, -3164, -14549, 20680, -12594, 3811, -470]'))
+ref_str = '  4   5 -13 -22   9  23  22  17   0   0';
+ref = sscanf(ref_str,'%d');
 
-% correct =  ...        
-%     39*p^15*(1-p)^2  +    677*p^14*(1-p)^3  +   5377*p^13*(1-p)^4  +  26069*p^12*(1-p)^5  + ...
-%  86762*p^11*(1-p)^6  + 210214*p^10*(1-p)^7  + 380438*p^9 *(1-p)^8  + 515498*p^8 *(1-p)^9  + ...
-% 518639*p^7 *(1-p)^10 + 389367*p^6 *(1-p)^11 + 219022*p^5 *(1-p)^12 +  91615*p^4 *(1-p)^13 + ...
-%  27792*p^3 *(1-p)^14 +   5802*p^2 *(1-p)^15 +    748*p   *(1-p)^16 +     45     *(1-p)^17 ;
+disp('Test code:    G2');
+disp(['Correct ECP:' ref_str]);
 
 end

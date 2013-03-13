@@ -20,10 +20,6 @@ disp('---------------------------------------------');
 
 %[VS, ES] = gen_test_tree_balanced(1,1);  %~ ?.?s 
  
-%[VS, ES] = gen_test_big_G1_easy;        %~ 0.3s
-%[VS, ES] = gen_test_big_G1;             %~ 0.8s
-%[VS, ES] = gen_test_big_G2;             %~ 1.0s
-
     arpa_time(01:17)= 0.1;                                  %2013-03-13
     arpa_time(18:20)= 0.1;                                  %2013-03-13
     arpa_time(21:22)= 0.3;                                  %2013-03-13

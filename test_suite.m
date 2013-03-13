@@ -16,6 +16,12 @@ run_test(VS, ES, ref, 'Test S4       OK!', 'Test S4       FAILED!');
 [VS, ES, ref] = gen_test_S5;
 run_test(VS, ES, ref, 'Test S5       OK!', 'Test S5       FAILED!');
 
+[VS, ES, ref] = gen_test_big_G1;
+run_test(VS, ES, ref, 'Test G1       OK!', 'Test G1       FAILED!');
+
+[VS, ES, ref] = gen_test_big_G2;
+run_test(VS, ES, ref, 'Test G2       OK!', 'Test G2       FAILED!');
+
 [VS, ES, ref] = gen_test_full(2500);          %~2.5s      %biograph is SLOW
 run_test(VS, ES, ref, 'Test FULL     OK!', 'Test FULL     FAILED!');
 

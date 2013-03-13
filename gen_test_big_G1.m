@@ -1,8 +1,8 @@
-function [V E] = gen_test_big_G1
+function [V E ref] = gen_test_big_G1
 %gen_test_full  Generates big test G1
 %   Detailed explanation goes here
 
-V = ones(10,1)';
+V = ones(1,10);
 
 E = false(10);
 E(1,3) = 1;
@@ -32,14 +32,10 @@ E(8,10)= 1;
 
 E = (E | E');
 
-%disp('Untested ECP: 15  -72  142 -152   77   20   15    0    0');
-disp('Untested ECP: -1   6  -8 -12  17  26  17   0   0');
+ref_str = '  -1   6  -8 -12  17  26  17   0   0';
+ref = sscanf(ref_str,'%d');
 
-% correct = ...
-%     18*p^16*(1-p)    +    305*p^15*(1-p)^2  +   2411*p^14*(1-p)^3  +  11950*p^13*(1-p)^4  + ...
-%  41942*p^12*(1-p)^5  + 110959*p^11*(1-p)^6  + 228747*p^10*(1-p)^7  + 372645*p^9 *(1-p)^8  + ...
-% 479339*p^8 *(1-p)^9  + 480185*p^7 *(1-p)^10 + 367664*p^6 *(1-p)^11 + 211619*p^5 *(1-p)^12 + ...
-%  90062*p^4 *(1-p)^13 +  27605*p^3 *(1-p)^14 +   5792*p^2 *(1-p)^15 +    748*p   *(1-p)^16 + ...
-%     45     *(1-p)^17 ;
+disp('Test code:    G1');
+disp(['Correct ECP:' ref_str]);
 
 end
