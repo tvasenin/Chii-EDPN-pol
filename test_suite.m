@@ -1,10 +1,6 @@
 function test_suite
 
-function run_test(VS, ES, ref, text_ok, text_failed)
-    Vrel = false(1,length(VS)); Wpol = ones(length(VS),1); ES = sparse(logical(ES));
-    ExP_coeffs = ECPN_pol(Vrel, ES, Wpol); ExP_coeffs = ExP_coeffs(find(ExP_coeffs,1):end); % fails if all ExP_coeffs are zero :)
-    if isequal(ref, ExP_coeffs') || isequal(ref, ExP_coeffs), disp(text_ok); else disp(text_failed); assert(false,'FAILED TEST!'); end
-end
+global cnt
 
 [VS, ES, ref] = gen_test_S1;
 run_test(VS, ES, ref, 'Test S1       OK!', 'Test S1       FAILED!');
@@ -42,4 +38,13 @@ end
 
 disp('All tests OK!')
 
+end
+
+
+function run_test(VS, ES, ref, text_ok, text_failed)
+    global cnt;
+    cnt = initCNT();
+    Vrel = false(1,length(VS)); Wpol = ones(length(VS),1); ES = sparse(logical(ES));
+    ExP_coeffs = ECPN_pol(Vrel, ES, Wpol); ExP_coeffs = ExP_coeffs(find(ExP_coeffs,1):end); % fails if all ExP_coeffs are zero :)
+    if isequal(ref, ExP_coeffs') || isequal(ref, ExP_coeffs), disp(text_ok); else disp(text_failed); assert(false,'FAILED TEST!'); end
 end
