@@ -12,7 +12,6 @@ function cnt = initCNT()
     cnt.TREE      = 0;
     cnt.HNODES    = 0;
     cnt.CHAINRED  = 0;
-    cnt.RELIABLE  = 0;
     cnt.BRANCHING = 0;
     cnt.TOTAL     = 0;
 

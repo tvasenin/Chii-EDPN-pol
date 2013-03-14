@@ -161,13 +161,8 @@ end
 
 %% Fully reliable connected graph
 %
-%think about moving to ECPN
+% Shouldn't get it, leave an assert just to be sure 
 assert(~all(rel),'[ERROR] Assertion failed -- found fully reliable connected graph in ECPN_C just before branching!');
-if all(rel) %V == ones(1,n) %sum(V) == n
-    cnt.RELIABLE = cnt.RELIABLE + 1;
-    P = ECPN_full_pol(Wpol); %using W instead of WV
-    return
-end
 
 %%
 %
