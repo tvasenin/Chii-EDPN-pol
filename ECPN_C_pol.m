@@ -14,7 +14,7 @@ end
 
 %% small precalc
 n = length(rel);
-assert(nnz(diag(E))==0, '[ERROR] Assertion failed -- nnz(diag(E))>0 in the start of ECPN_C!');
+assert(~any(diag(E)), '[ERROR] Assertion failed -- nnz(diag(E))>0 in the start of ECPN_C!');
 
 %% 2-3-4 node case
 
@@ -38,11 +38,11 @@ end
 
 %% precalc
 Es = sum(E);
-%assert(nnz(rel(Es==2))==0,'out');
+%assert(~any(rel(Es==2)),'out');
 
 %% (connected) graph with node of n-1 degree, but not full
 %
-if (max(Es) == n-1) && nnz(Es~=(n-1)) % should not be full, may be optimized for multiple nodes
+if (max(Es) == n-1) && any(Es~=(n-1)) % should not be full, may be optimized for multiple nodes
     cnt.MAXDEG = cnt.MAXDEG + 1;
     %temporary disabled debug output
     %max_mask = Es==(n-1);
@@ -132,7 +132,7 @@ if ~isempty(find(Es==1,1))
     cnt.HNODES = cnt.HNODES + 1;
     [P, rel, E, Wpol] = ECPN_hnodes_pol_v4_back(rel,E,Wpol);
 %    if numel(rel) > 3 %
-    if nnz(E) > 0 %still have some edges
+    if find(E,1) %still have some edges
         tmp = ECPN_C_pol(rel,E,Wpol);
         P = poly_add(P,tmp);
     end
@@ -152,8 +152,8 @@ ind_ch = Es==2;
 %because of conflicts with reliable nodes reducing
 %to enable ASAP
 
-%if nnz(ind_ch) > 0 %have 2 or more nodes with deg = 2
-if nnz(E(ind_ch,ind_ch)) % have at least two consecutive nodes of degree 2
+%if any(ind_ch) %have 2 or more nodes with deg = 2
+if find(E(ind_ch,ind_ch),1) % have at least two consecutive nodes of degree 2
     cnt.CHAINRED = cnt.CHAINRED + 1;
     P = ECPN_chainred_pol_v3(rel,E,Wpol);
     return
@@ -162,8 +162,8 @@ end
 %% Fully reliable connected graph
 %
 %think about moving to ECPN
-assert(nnz(~rel)>0,'[ERROR] Assertion failed -- found fully reliable connected graph in ECPN_C just before branching!');
-if nnz(~rel)==0 %V == ones(1,n) %sum(V) == n
+assert(~all(rel),'[ERROR] Assertion failed -- found fully reliable connected graph in ECPN_C just before branching!');
+if all(rel) %V == ones(1,n) %sum(V) == n
     cnt.RELIABLE = cnt.RELIABLE + 1;
     P = ECPN_full_pol(Wpol); %using W instead of WV
     return
@@ -269,7 +269,7 @@ ind(red) = 0;
 if ~cut_idx(red)% red is not cut, so after removing red graph will stay connected
     P = ECPN_C_pol(rel(ind),E(ind,ind),Wpol(ind,:)); % may get new cut nodes, can't pass cut_idx! 
 else            % red is cut, so we definitely have multigraph
-    if nnz(cut_idx & E(red,:)) %there are some cut nodes adjacent to red
+    if any(cut_idx & E(red,:)) %there are some cut nodes adjacent to red
         P = ECPN_pol(rel(ind),E(ind,ind),Wpol(ind,:)); % may lose some cut nodes (red neighbours)!
     else                       %there are some cut nodes adjacent to red
         P = ECPN_pol(rel(ind),E(ind,ind),Wpol(ind,:), cut_idx(ind)); % red is cut node and there are no adjacent cut nodes
