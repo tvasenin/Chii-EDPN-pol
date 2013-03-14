@@ -26,7 +26,7 @@ while nnzi
                 pars = find(E(leaves2,:),1);
                 m = 1;
             else
-                pars = find(sum(E(ileaves,:),1)); % explicit sum by dim 1 !
+                pars = find(any(E(ileaves,:),1)); % explicitly by dim 1 !
                 m = length(pars);
 %               if (nnz(ileaves) ~= m) % need to search back for relevant leaves
                 leaves2 = zeros(1,m);
@@ -35,7 +35,7 @@ while nnzi
                 end
             end
         otherwise
-            pars = find(sum(E(ileaves,:),1)); % explicit sum by dim 1 !
+            pars = find(any(E(ileaves,:),1)); % explicitly by dim 1 !
             m = length(pars);
 %           if (nnz(ileaves) ~= m) % need to search back for relevant leaves
             leaves2 = zeros(1,m);
@@ -43,7 +43,7 @@ while nnzi
                 leaves2(i) = find(E(pars(i),:) & ileaves,1);
             end
     end
-    
+
     if (iter == 1)
         %initialize lmat and pmat
         mcnt = zeros(1,n-m); % n-m iters max
@@ -51,11 +51,10 @@ while nnzi
         pmat = zeros(m,n-m);
     end
 
-    
     mcnt(iter)      = m;
     lmat(iter, 1:m) = leaves2;
     pmat(iter, 1:m) = pars;
-    
+
     Es(leaves2) = 0;
     Es(pars) = Es(pars) - 1;
 
