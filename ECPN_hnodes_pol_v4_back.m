@@ -18,15 +18,21 @@ for k = 1:length(mcnt)
     for i = 1:length(hnodes)
         hnode = hnodes(i);
         nei = neis(i);
-        if      rel(hnode) &&  rel(nei) % [1 1]
-            P = P + [0  0  conv2(Wpol(hnode,:),Wpol(nei,:))];
-%            P(3:end) = P(3:end) + conv2(Wpol(hnode,:),Wpol(nei,:));
-        elseif ~rel(hnode) && ~rel(nei) % [p p]
+        rh = rel(hnode);
+        rn = rel(nei);
+        
+        if     ~rh && ~rn  % [p p]
             P = P + [conv2(Wpol(hnode,:),Wpol(nei,:))  0  0];
 %            P(1:end-2) = P(1:end-2) + conv2(Wpol(hnode,:),Wpol(nei,:));
-        else                            % [0 p] or [p 0]
+        elseif        ~rn  % [1 p]
             P = P + [0  conv2(Wpol(hnode,:),Wpol(nei,:))  0];
 %            P(2:end-1) = P(2:end-1) + conv2(Wpol(hnode,:),Wpol(nei,:));
+        elseif ~rh         % [p 1]
+            P = P + [0  conv2(Wpol(hnode,:),Wpol(nei,:))  0];
+%            P(2:end-1) = P(2:end-1) + conv2(Wpol(hnode,:),Wpol(nei,:));
+        else               % [1 1]
+            P = P + [0  0  conv2(Wpol(hnode,:),Wpol(nei,:))];
+%            P(3:end) = P(3:end) + conv2(Wpol(hnode,:),Wpol(nei,:));
         end
     end
 
