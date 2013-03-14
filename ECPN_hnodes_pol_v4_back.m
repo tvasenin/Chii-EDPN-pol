@@ -13,26 +13,22 @@ for k = 1:length(mcnt)
     hnodes = lmat(k,1:mcnt(k));
     neis   = pmat(k,1:mcnt(k));
     %P = P + VW(hnodes)*VW(hneis)'; %shouldn't use VW for hnode!!
-    %tmp = zeros(1,length(hnodes));
 
     for i = 1:length(hnodes)
         hnode = hnodes(i);
         nei = neis(i);
         rh = rel(hnode);
         rn = rel(nei);
+        tmp = conv2(Wpol(hnode,:),Wpol(nei,:));
         
         if     ~rh && ~rn  % [p p]
-            P = P + [conv2(Wpol(hnode,:),Wpol(nei,:))  0  0];
-%            P(1:end-2) = P(1:end-2) + conv2(Wpol(hnode,:),Wpol(nei,:));
+            P = P + [ tmp 0  0];
         elseif        ~rn  % [1 p]
-            P = P + [0  conv2(Wpol(hnode,:),Wpol(nei,:))  0];
-%            P(2:end-1) = P(2:end-1) + conv2(Wpol(hnode,:),Wpol(nei,:));
+            P = P + [0  tmp  0];
         elseif ~rh         % [p 1]
-            P = P + [0  conv2(Wpol(hnode,:),Wpol(nei,:))  0];
-%            P(2:end-1) = P(2:end-1) + conv2(Wpol(hnode,:),Wpol(nei,:));
+            P = P + [0  tmp  0];
         else               % [1 1]
-            P = P + [0  0  conv2(Wpol(hnode,:),Wpol(nei,:))];
-%            P(3:end) = P(3:end) + conv2(Wpol(hnode,:),Wpol(nei,:));
+            P = P + [0  0  tmp];
         end
     end
 
