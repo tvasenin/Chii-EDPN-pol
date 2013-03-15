@@ -5,36 +5,36 @@ function [ index, c0, cend, c_first, c_last ] = GetIndexedChain( E )
 %% assert: no hnodes, not a cycle
 
 n = length(E);
-Es = sum(E);
-ind_ch = (Es == 2);
+ind_ch = (sum(E) == 2);
 
 E_ch = E;
 E_ch(~ind_ch,:) = 0;
 E_ch(:,~ind_ch) = 0;
 [comps c_lens] = components_mex(E_ch); % shortcut, need to place MEX-file to the MATLAB path
 
-c_lens(c_lens == 1) = 0;
-
 [c_len c_max] = max(c_lens);
 
+assert(c_len > 1, 'c_len should be greater than 1!');
+
 %disp([int2str(nnz(c_len)), ' chain(s) found (max length = ', int2str(c_max_len), '): ', int2str(nonzeros(c_len)')]);
-c = find(comps == c_max);
-if length(c) > 2
-    %Es_ch = sum(E_ch);
-    %c = c(graphtraverse(E(c,c),find(Es_ch(c)==1,1),'Directed',false)); %traversing chain
-    %c = c(graphalgs('dfs',0,false,E(c,c),find(Es_ch(c)==1,1),inf));% shortcut, need to place graphalgs MEX-file to the MATLAB path
-    c = c(chaintraverse_fast(E(c,c)));
+c_ind = (comps' == c_max);
+c = find(c_ind,c_len);
+if (c_len > 2) % need to traverse chain!
+    Ecc = E(c_ind,c_ind);
+    [~, index2] = sort(dfs_mex(Ecc,find(sum(Ecc)==1,1),0,0)); % shortcut, need to place MEX-file to the MATLAB path
+    c = c(index2);
 end
-c0   = find(E(c(1),:)   & ~E_ch(c(1),:)  );
-cend = find(E(c(end),:) & ~E_ch(c(end),:));
-index = 1:n;
+
+c0   = find(E(c(1)  ,:) & ~c_ind, 1);
+cend = find(E(c(end),:) & ~c_ind, 1);
 
 %if c0 == cend
 %    disp('OLOLO! c0 = cend!');
 %end
 
-c = c';
+index = 1:n;
 index([c0 c]) = [];
+
 index = [c0 c index];
 c0   = find(index == c0);
 cend = find(index == cend);
